@@ -9,7 +9,3 @@
     </head>
     <body>
         <div>
-            <img src="/images/gaelyk.png">
-            <img src="/images/google-app-engine-groovy.png" align="right">            
-        </div>
-        <div>
