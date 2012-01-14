@@ -31,6 +31,4 @@ public class Sum_Test {
     public void test_fieldsNotSet_sumsToZero() {
         assertEquals(0, sum.sum());
     }
-
-
 }
