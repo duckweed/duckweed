@@ -86,12 +86,6 @@
                 <groupId>org.codehaus.gmaven</groupId>
                 <artifactId>gmaven-plugin</artifactId>
                 <version>${gmaven.version}</version>
-                <dependencies><!-- http://groovy.329449.n5.nabble.com/GMaven-and-Groovy-1-8-td4345921.html -->
-                    <dependency>
-                        <groupId>org.codehaus.groovy</groupId>
-                        <artifactId>groovy-all</artifactId>
-                        <version>1.8.0</version>
-                    </dependency>
                 <executions>
                     <execution>
                         <goals>
