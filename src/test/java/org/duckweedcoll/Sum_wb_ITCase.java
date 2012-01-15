@@ -1,12 +1,14 @@
 package org.duckweedcoll;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class Sum_wb_ITCase {
@@ -35,6 +37,15 @@ public class Sum_wb_ITCase {
         assertSourceContains("should throw a numeric exception", "NumberFormatException");
     }
 
+    @Test
+    public void test_structure() {
+        assertEquals("Sum Me", getCssSelectorText("h1"));
+    }
+
+    private String getCssSelectorText(String tag) {
+        return driver.findElement(By.cssSelector(tag)).getText();
+    }
+
 
     private void checkSumming(String message, String valueA, String valueB, String expectedValue) {
         driver.findElement(By.name("a")).sendKeys(valueA);
@@ -54,8 +65,12 @@ public class Sum_wb_ITCase {
     }
 
     @BeforeClass
-    public static void before() {
+    public static void beforeClass() {
         driver = new FirefoxDriver();
+    }
+
+    @Before
+    public void before() {
         driver.get("http://localhost:8080/sum.groovy");
     }
 }
