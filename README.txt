@@ -16,3 +16,6 @@ mvn gae:deploy
 
 and in another run -
 mvn verify
+
+to upload site:
+mvn site -Dgithub.global.userName=duckweed -Dgithub.global.password=**********
