@@ -22,11 +22,15 @@ User user = userService.getCurrentUser();
 
 if(user != null){
 %>
-Welcome <%= user.getNickname()%>  <a href="deauthenticate.groovy">log off here</a>
+Welcome <%= user.getNickname()%>  <a href="deauthenticate.groovy">log off here</a><br/>
+Auth Domain = <%= user.getAuthDomain()%><br/>
+Federated Identity = <%= user.getFederatedIdentity()%><br/>
+User Id = <%= user.getUserId()%><br/>
+
 <%
 }else{
 %>
-<a href="authenticate.groovy">log on here</a>
+<a href="authenticate.groovy">log on</a>
 <%
 }
 %>
@@ -38,7 +42,7 @@ hello, here
     Click <a href="authenticate.groovy">here</a> new style log on<br/>
     Click <a href="deauthenticate.groovy">here</a> new style log off<br/>
     Click <a href="datetime.groovy">here</a> to view the current date/time, when it's a good time to collaborate.<br/>
-    Click <a href="sum.groovy">here</a> to view the add 2 numbers!! herte
+    Click <a href="sum.groovy">here</a> to view the add 2 numbers!!
 </p>
 
 <% include '/WEB-INF/includes/footer.gtpl' %>
