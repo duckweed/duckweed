@@ -1,11 +1,44 @@
 <% include '/WEB-INF/includes/header.gtpl' %>
 
+<%import java.util.List%>
+<%import com.google.appengine.api.users.User%>
+<%import com.google.appengine.api.users.UserService%>
+<%import com.google.appengine.api.users.UserServiceFactory%>
+<%import com.google.appengine.api.datastore.DatastoreServiceFactory%>
+<%import com.google.appengine.api.datastore.DatastoreService%>
+<%import com.google.appengine.api.datastore.Query%>
+<%import com.google.appengine.api.datastore.Entity%>
+<%import com.google.appengine.api.datastore.FetchOptions%>
+<%import com.google.appengine.api.datastore.Key%>
+<%import com.google.appengine.api.datastore.KeyFactory%>
+
 <h1>Welcome to Duckweed Collaboration</h1>
+
+<%
+UserService userService = UserServiceFactory.getUserService();
+User user = userService.getCurrentUser();
+
+
+
+if(user != null){
+%>
+Welcome <%= user.getNickname()%>  <a href="deauthenticate.groovy">log off here</a>
+<%
+}else{
+%>
+<a href="authenticate.groovy">log on here</a>
+<%
+}
+%>
+
+hello, here
 
 <p>
     Click <a href="login.groovy">here</a> to log in to this app (beta: username/password, andrew/password)<br/>
+    Click <a href="authenticate.groovy">here</a> new style log on<br/>
+    Click <a href="deauthenticate.groovy">here</a> new style log off<br/>
     Click <a href="datetime.groovy">here</a> to view the current date/time, when it's a good time to collaborate.<br/>
-    Click <a href="sum.groovy">here</a> to view the add 2 numbers!!
+    Click <a href="sum.groovy">here</a> to view the add 2 numbers!! herte
 </p>
 
 <% include '/WEB-INF/includes/footer.gtpl' %>
