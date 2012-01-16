@@ -19,3 +19,6 @@ mvn verify
 
 to upload site:
 mvn site -Dgithub.global.userName=duckweed -Dgithub.global.password=**********
+
+to live deploy new code on a running local instance, run this in a separate window:
+mvn compile war:exploded
