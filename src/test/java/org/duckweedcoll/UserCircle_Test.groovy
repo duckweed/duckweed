@@ -33,9 +33,11 @@ import static org.junit.Assert.assertEquals
 //http://code.google.com/appengine/docs/java/datastore/queries.html
 
 @GaelykBindings
-class UserData_Test {
+class UserCircle_Test {
 
     LocalServiceTestHelper helper
+    UserCircle userCircle = new UserCircle()
+
 
     @Test
     public void test_createAUser_retrieveIt() {
@@ -43,7 +45,7 @@ class UserData_Test {
         def expectedAddress = '7 erehwon, nowhere'
         def expectedName = 'andrew'
 
-        datastore.put createUser(expectedName, expectedAddress, expectedEmail)
+        datastore.put userCircle.createUser(expectedName, expectedAddress, expectedEmail)
 
         Entity user = findUniqueUser();
 
@@ -75,15 +77,12 @@ class UserData_Test {
         assertEquals('steven@perth.com.au', results[0].getProperty('email'))
     }
 
-
-    // create a circle with 2 and 3 owners
-
     @Test
     public void test_createCircle_oneOwner() throws Exception {
-        def user = createUser('andrew', '', '')
+        def user = userCircle.createUser('andrew', '', '')
         datastore.put user
 
-        Entity circle = createCircle('general circle', user)
+        Entity circle = userCircle.createCircle('general circle', user)
 
         assertEquals 'general circle', circle.getProperty('name')
         def owner = datastore.get circle.getProperty('owner')
@@ -96,16 +95,32 @@ class UserData_Test {
         Entity user2
         (user1, user2) = create2users()
 
-        createCircle('c1', user1)
-        def circle2 = createCircle('c2', user2)
+        userCircle.createCircle('c1', user1)
+        def circle2 = userCircle.createCircle('c2', user2)
 
-        addCircleToUser(user1, circle2)
+        userCircle.addCircleToUser(user1, circle2)
 
         def user1circles = user1.getProperty 'circles'
 
         assertEquals 2, user1circles.size()
     }
 
+
+    @Test
+    public void test_aCircleMayHaveTwoOwners() throws Exception {
+        Entity user1
+        Entity user2
+        (user1, user2) = create2users()
+
+        userCircle.createCircle('c1', user1)
+        def circle2 = userCircle.createCircle('c2', user2)
+
+        userCircle.addOwnerToCircle(circle2, user2)
+
+        def circle2owners = circle2.getProperty 'owner'
+
+        assertEquals 2, circle2owners.size()
+    }
 
     @Test
     public void test_aUserMayHaveThreeCircles() throws Exception {
@@ -115,20 +130,20 @@ class UserData_Test {
 
         (user1, user2) = create2users()
 
-        createCircle('c1', user1)
-        def circle2 = createCircle('c2', user2)
-        def circle3 = createCircle('c3', user2)
+        userCircle.createCircle('c1', user1)
+        def circle2 = userCircle.createCircle('c2', user2)
+        def circle3 = userCircle.createCircle('c3', user2)
 
-        addCircleToUser(user1, circle2)
-        addCircleToUser(user1, circle3)
+        userCircle.addCircleToUser(user1, circle2)
+        userCircle.addCircleToUser(user1, circle3)
 
         def user1circles = user1.getProperty 'circles'
         assertEquals 3, user1circles.size()
     }
 
     private create2users() {
-        def user1 = createUser('steven', 'perth', 'steven@perth.com.au')
-        def user2 = createUser('philip', 'hilaries', 'philip@hillaries.com.au')
+        def user1 = userCircle.createUser('steven', 'perth', 'steven@perth.com.au')
+        def user2 = userCircle.createUser('philip', 'hilaries', 'philip@hillaries.com.au')
         datastore.put user1
         datastore.put user2
 
@@ -140,30 +155,6 @@ class UserData_Test {
         Query query = new Query('user')
         List<Entity> greetings = ((DatastoreService) datastore).prepare(query).asList(FetchOptions.Builder.withLimit(5))
         return greetings[0]
-    }
-
-    /**************** generalisable ***************/
-    private Entity createUser(String name, String address, String email) {
-        def entity = new Entity('user')
-        entity.setProperty 'email', email
-        entity.setProperty 'address', address
-        entity.setProperty 'name', name
-        entity
-    }
-
-    private Entity createCircle(String circleName, Entity initialOwner) {
-        Entity circle = new Entity('circle')
-        circle.setProperty 'name', circleName
-        circle.setProperty 'owner', initialOwner.getKey()
-
-        initialOwner.setProperty('circles', circle.getKey())
-        datastore.put initialOwner
-        return circle
-    }
-
-    private addCircleToUser(Entity user1, Entity circle) {
-        def circles = user1.getProperty 'circles'
-        user1.setProperty 'circles', [] + circles + circle.getKey()
     }
 
     @Before
