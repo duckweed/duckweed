@@ -45,5 +45,11 @@ hello, here
     Click <a href="sum.groovy">here</a> to view the add 2 numbers!!
 </p>
 
+<p>
+    <a target="1" href="http://duckweedcollaboration.appspot.com/">live</a><br/>
+    <a target="2" href="https://appengine.google.com/dashboard?&app_id=s~duckweedcollaboration">google app console</a><br/>
+    <a target="3" href="https://github.com/duckweed/duckweed">github</a><br/>
+</p>
+
 <% include '/WEB-INF/includes/footer.gtpl' %>
 
