@@ -1,18 +1,18 @@
 Duckweed Collaboration
 ======================
 
-To run:
+To run locally:
 
 mvn package gae:run
 
-To package:
+To deploy on google app:
 
 mvn package gae:deploy
 
 To run integration tests:
 
 in one window run -
-mvn gae:deploy
+mvn gae:run
 
 and in another run -
 mvn verify
