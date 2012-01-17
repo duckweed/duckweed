@@ -18,26 +18,17 @@ package org.duckweedcoll;
       under the License.
 */
 
-import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.junit.Assert
+import org.openqa.selenium.By
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebElement
+import static org.junit.Assert.assertEquals
 
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
+import org.duckweedcoll.WebDriverAssistant
 
 public class WebDriverAssistant {
     public static void assertSourceContains(WebDriver driver, String message, String expectedString) {
         Assert.assertTrue(message, driver.getPageSource().contains(expectedString));
-    }
-
-    public static void checkSumming(String message, WebDriver driver, String valueA, String valueB, String expectedValue) {
-        driver.findElement(By.name("a")).sendKeys(valueA);
-        driver.findElement(By.name("b")).sendKeys(valueB);
-        driver.findElement(By.name("b")).submit();
-
-        assertSourceContains(driver, message, "Sum is " + expectedValue);
     }
 
     public static String getCssSelectorText(WebDriver driver, String tag) {
@@ -50,5 +41,13 @@ public class WebDriverAssistant {
 
     public static WebElement findElement(WebDriver driver, String tag) {
         return driver.findElement(By.name(tag));
+    }
+
+    public static void findAndClickButton(WebDriver driver, text) {
+        List<WebElement> elements = driver.findElements(By.cssSelector('a'))
+        WebElement button = elements.find {
+            it.text == text
+        }
+        button.click()
     }
 }

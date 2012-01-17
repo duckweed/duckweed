@@ -25,8 +25,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class WebDriverRoot {
 
-    static WebDriver driver;
-
+    static public WebDriver driver;
 
     @AfterClass
     public static void afterClass() {

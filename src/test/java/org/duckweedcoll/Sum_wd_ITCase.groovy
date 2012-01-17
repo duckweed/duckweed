@@ -21,12 +21,12 @@ package org.duckweedcoll;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
+import static groovy.util.GroovyTestCase.assertEquals;
 import static org.duckweedcoll.WebDriverAssistant.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-public class Sum_wb_ITCase extends WebDriverRoot {
+public class Sum_wd_ITCase extends WebDriverRoot {
 
     @Test
     public void test_whenDigitsAreEntered_thenSummedCorrectly() {
@@ -46,14 +46,21 @@ public class Sum_wb_ITCase extends WebDriverRoot {
         driver.findElement(By.name("a")).sendKeys("non numeric");
         driver.findElement(By.name("Send")).submit();
 
-        assertSourceContains(driver, "should throw a numeric exception", "NumberFormatException");
+        new WebDriverAssistant().assertSourceContains(driver, "should throw a numeric exception", "NumberFormatException");
     }
 
     @Test
     public void test_structure() {
-        assertEquals("Sum Me", getCssSelectorText(driver, "h1"));
+        assertEquals("Sum Me", new WebDriverAssistant().getCssSelectorText(driver, "h1"));
     }
 
+    public void checkSumming(String message, WebDriver driver, String valueA, String valueB, String expectedValue) {
+        driver.findElement(By.name("a")).sendKeys(valueA);
+        driver.findElement(By.name("b")).sendKeys(valueB);
+        driver.findElement(By.name("b")).submit();
+
+        new WebDriverAssistant().assertSourceContains(driver, message, "Sum is " + expectedValue);
+    }
 
     @Before
     public void before() {
