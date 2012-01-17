@@ -18,16 +18,13 @@ package org.duckweedcoll
       under the License.
 */
 
-import com.google.appengine.api.datastore.DatastoreService
-import com.google.appengine.api.datastore.Entity
-import com.google.appengine.api.datastore.FetchOptions
-import com.google.appengine.api.datastore.Query
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper
 import groovyx.gaelyk.GaelykBindings
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import com.google.appengine.api.datastore.*
 import static org.junit.Assert.assertEquals
 
 //http://code.google.com/appengine/docs/java/datastore/queries.html
@@ -41,7 +38,7 @@ class UserCircle_Test {
 
     @Test
     public void test_createAUser_retrieveIt() {
-        def expectedEmail = 'andrew@andrew.com'
+        def expectedEmail = new Email('andrew@andrew.com')
         def expectedAddress = '7 erehwon, nowhere'
         def expectedName = 'andrew'
 
@@ -74,7 +71,7 @@ class UserCircle_Test {
         assertEquals("there should be only one", 1, results.size())
         assertEquals('steven', results[0].getProperty('name'))
         assertEquals('perth', results[0].getProperty('address'))
-        assertEquals('steven@perth.com.au', results[0].getProperty('email'))
+        assertEquals('steven@perth.com.au', results[0].getProperty('email').email)
     }
 
     @Test

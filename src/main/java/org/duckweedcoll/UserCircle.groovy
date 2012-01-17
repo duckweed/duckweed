@@ -2,6 +2,7 @@ package org.duckweedcoll
 
 import com.google.appengine.api.datastore.Entity
 import groovyx.gaelyk.GaelykBindings
+import com.google.appengine.api.datastore.Email
 
 /*
       Licensed to the Apache Software Foundation (ASF) under one
@@ -23,7 +24,12 @@ import groovyx.gaelyk.GaelykBindings
 */
 @GaelykBindings
 class UserCircle {
+
     Entity createUser(String name, String address, String email) {
+        createUser(name, address, new Email(email))
+    }
+
+    Entity createUser(String name, String address, Email email) {
         def entity = new Entity('user')
         entity.setProperty 'email', email
         entity.setProperty 'address', address
