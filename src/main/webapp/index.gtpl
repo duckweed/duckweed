@@ -22,7 +22,7 @@ User user = userService.getCurrentUser();
 
 if(user != null){
 %>
-Welcome <%= user.getNickname()%>  <a href="deauthenticate.groovy">log off here</a><br/>
+Welcome <%= user.getNickname()%>  <a href="logout.groovy">log out </a><br/>
 Auth Domain = <%= user.getAuthDomain()%><br/>
 Federated Identity = <%= user.getFederatedIdentity()%><br/>
 User Id = <%= user.getUserId()%><br/>
@@ -30,17 +30,12 @@ User Id = <%= user.getUserId()%><br/>
 <%
 }else{
 %>
-<a href="authenticate.groovy">log on</a>
+<a href="login.groovy">log in</a>
 <%
 }
 %>
 
-hello, here
-
 <p>
-    Click <a href="login.groovy">here</a> to log in to this app (beta: username/password, andrew/password)<br/>
-    Click <a href="authenticate.groovy">here</a> new style log on<br/>
-    Click <a href="deauthenticate.groovy">here</a> new style log off<br/>
     Click <a href="datetime.groovy">here</a> to view the current date/time, when it's a good time to collaborate.<br/>
     Click <a href="sum.groovy">here</a> to view the add 2 numbers!!
 </p>

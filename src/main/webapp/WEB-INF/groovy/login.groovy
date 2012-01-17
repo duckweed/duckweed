@@ -1,4 +1,3 @@
-
 /*
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
@@ -17,17 +16,15 @@
        specific language governing permissions and limitations
        under the License.
  */
+import com.google.appengine.api.users.User
+import com.google.appengine.api.users.UserServiceFactory
+import com.google.appengine.api.users.UserService
 
-def username = params.get("username");
-def password = params.get("password");
+UserService userService = UserServiceFactory.getUserService();
+User user = userService.getCurrentUser();
 
-if(username == "andrew" && password == "password"){
-    request.getSession(true)
-    request.setAttribute 'username', 'andrew'
-    forward '/welcome.gtpl'
-    return
+if (user != null) {
+    forward '/'
+} else {
+    response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
 }
-
-
-
-forward '/login.gtpl'
