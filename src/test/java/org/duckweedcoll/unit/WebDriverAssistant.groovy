@@ -1,4 +1,4 @@
-package org.duckweedcoll;
+package org.duckweedcoll.unit;
 /*
       Licensed to the Apache Software Foundation (ASF) under one
       or more contributor license agreements.  See the NOTICE file
@@ -23,8 +23,6 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import static org.junit.Assert.assertEquals
-
-import org.duckweedcoll.WebDriverAssistant
 
 public class WebDriverAssistant {
     public static void assertSourceContains(WebDriver driver, String message, String expectedString) {

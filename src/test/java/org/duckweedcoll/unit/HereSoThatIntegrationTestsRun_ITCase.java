@@ -1,4 +1,4 @@
-package org.duckweedcoll;
+package org.duckweedcoll.unit;
 
 import org.junit.Test;
 

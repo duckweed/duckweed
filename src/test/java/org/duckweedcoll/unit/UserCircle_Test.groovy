@@ -1,4 +1,4 @@
-package org.duckweedcoll
+package org.duckweedcoll.unit
 /*
       Licensed to the Apache Software Foundation (ASF) under one
       or more contributor license agreements.  See the NOTICE file
@@ -26,6 +26,7 @@ import org.junit.Before
 import org.junit.Test
 import com.google.appengine.api.datastore.*
 import static org.junit.Assert.assertEquals
+import org.duckweedcoll.UserCircle
 
 //http://code.google.com/appengine/docs/java/datastore/queries.html
 

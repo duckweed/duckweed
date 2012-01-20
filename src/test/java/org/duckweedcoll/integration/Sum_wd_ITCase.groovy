@@ -1,4 +1,4 @@
-package org.duckweedcoll;
+package org.duckweedcoll.integration;
 /*
       Licensed to the Apache Software Foundation (ASF) under one
       or more contributor license agreements.  See the NOTICE file
@@ -24,7 +24,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import static groovy.util.GroovyTestCase.assertEquals;
-import static org.duckweedcoll.WebDriverAssistant.*;
+
+
+import org.duckweedcoll.WebDriverRoot
+import org.duckweedcoll.unit.WebDriverAssistant;
 
 public class Sum_wd_ITCase extends WebDriverRoot {
 

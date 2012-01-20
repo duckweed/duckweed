@@ -1,8 +1,12 @@
-package org.duckweedcoll
+package org.duckweedcoll.integration
 
 import org.junit.Before
 import org.junit.Test
-import static org.duckweedcoll.WebDriverAssistant.findAndClickButton
+import static org.duckweedcoll.unit.WebDriverAssistant.findAndClickButton
+import org.duckweedcoll.WebDriverRoot
+import org.openqa.selenium.WebElement
+import org.openqa.selenium.By
+import static org.junit.Assert.assertNotNull
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -25,13 +29,34 @@ import static org.duckweedcoll.WebDriverAssistant.findAndClickButton
 
 class Login_wd_ITCase extends WebDriverRoot {
     @Test
-    public void testLogin() {
+    public void shouldLoginAndLogout() {
         findAndClickButton(driver, 'log in')
+        accceptGoogleAuth()
+        driver.getPageSource().contains('Welcome test@example.com')
+        findAndClickButton(driver, 'log out')
+        findAndClickButton(driver, 'log out')
     }
+
+    @Test
+    public void ifUserHasntBeenSeen_showPlaceToEnterUserName() {
+        findAndClickButton(driver, 'log in')
+        accceptGoogleAuth()
+        sleep 1000
+        assertNotNull "should find a place to enter their name", driver.findElement(By.name('username'))
+    }
+
 
     @Before
     public void before() {
         driver.get("http://localhost:8080");
+    }
+
+    private accceptGoogleAuth() {
+        List<WebElement> elements = driver.findElements(By.cssSelector('input'))
+        WebElement button = elements.find {
+            it.getAttribute('value').trim() == 'Log In'
+        }
+        button.click()
     }
 
 }

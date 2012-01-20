@@ -1,4 +1,4 @@
-package org.duckweedcoll;
+package org.duckweedcoll.unit;
 /*
       Licensed to the Apache Software Foundation (ASF) under one
       or more contributor license agreements.  See the NOTICE file
@@ -18,6 +18,7 @@ package org.duckweedcoll;
       under the License.
 */
 
+import org.duckweedcoll.Sum;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
