@@ -2,6 +2,7 @@
     <application>duckweedcollaboration</application>
     
     <version>1</version>
+    <sessions-enabled>true</sessions-enabled>
 
     <!-- Enable concurrent requests by default to serve requests in parallel -->
     <threadsafe>true</threadsafe>

@@ -12,21 +12,21 @@
 <%import com.google.appengine.api.datastore.Key%>
 <%import com.google.appengine.api.datastore.KeyFactory%>
 
-<h1>Welcome to Duckweed Collaboration</h1>
+<div class="main">
 
+    <h1>Welcome to Duckweed Collaboration</h1>
 <%
-UserService userService = UserServiceFactory.getUserService();
-User user = userService.getCurrentUser();
-
-
-
-if(user != null){
+request.getSession(true)
+if(user != null && session != null && session.getAttribute('person') != null ){
+    Entity person = session.getAttribute('person')
+    def username = person.getProperty('username')
+    def bio = person.getProperty('bio')
 %>
-Welcome <%= user.getNickname()%>  <a href="logout.groovy">log out </a><br/>
-Auth Domain = <%= user.getAuthDomain()%><br/>
-Federated Identity = <%= user.getFederatedIdentity()%><br/>
-User Id = <%= user.getUserId()%><br/>
-
+<%= user.getNickname()%>
+<a href="logout.groovy">log out </a><br/>
+Nick Name <%= username %></br>
+Bio <%= bio %></br>
+<a href="/showprofile.groovy">profile</a>
 <%
 }else{
 %>
@@ -35,16 +35,8 @@ User Id = <%= user.getUserId()%><br/>
 }
 %>
 
-<p>
-    Click <a href="datetime.groovy">here</a> to view the current date/time, when it's a good time to collaborate.<br/>
-    Click <a href="sum.groovy">here</a> to view the add 2 numbers!!
-</p>
+</div>
 
-<p>
-    <a target="1" href="http://duckweedcollaboration.appspot.com/">live</a><br/>
-    <a target="2" href="https://appengine.google.com/dashboard?&app_id=s~duckweedcollaboration">google app console</a><br/>
-    <a target="3" href="https://github.com/duckweed/duckweed">github</a><br/>
-</p>
-
+<% include '/WEB-INF/includes/demos.gtpl' %>
 <% include '/WEB-INF/includes/footer.gtpl' %>
 

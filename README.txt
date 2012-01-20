@@ -1,6 +1,12 @@
 Duckweed Collaboration
 ======================
 
+Useful Links:
+-------------
+http://groups.google.com/group/gaelyk
+http:/gaelyk.appspot.com
+
+
 To run locally:
 
 mvn package gae:run
