@@ -1,5 +1,6 @@
 import com.google.appengine.api.datastore.Entity
 import com.google.appengine.api.datastore.Query
+import com.google.appengine.api.datastore.FetchOptions
 
 def query = new Query('user')
 def id = user.getUserId()

@@ -1,6 +1,6 @@
 import com.google.appengine.api.datastore.Entity
 
-if (params.submit == 'Submit') {
+if (params.submit != null) {
     if (params.name == '') {
         // error
     } else {
@@ -16,7 +16,7 @@ include '/WEB-INF/includes/header.gtpl'
 
 html.html {
     h1 'Create A Circle'
-    form() {
+    form(method:'post') {
         p('name')
         input(name: 'name', type: 'text')
         p('description')

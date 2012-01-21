@@ -10,6 +10,11 @@ import org.openqa.selenium.WebElement
 import static org.duckweedcoll.unit.WebDriverAssistant.*
 import static org.junit.Assert.assertNotNull
 import static org.junit.Assert.fail
+import com.google.appengine.api.datastore.Query
+import com.google.appengine.api.datastore.FetchOptions
+import com.google.appengine.tools.development.testing.LocalServiceTestHelper
+import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig
+import groovyx.gaelyk.GaelykBindings
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -29,8 +34,8 @@ import static org.junit.Assert.fail
        specific language governing permissions and limitations
        under the License.
  */
-
 class Login_wd_ITCase extends WebDriverRoot {
+
     @Test
     public void shouldLoginAndLogout() {
         driver.getPageSource().contains('Welcome test@example.com')
@@ -72,11 +77,26 @@ class Login_wd_ITCase extends WebDriverRoot {
         findElement(driver, 'description')
     }
 
-
     @Test
     public void newCircleButtonShouldShow_title() {
         findAndClickButton(driver, 'newcircle')
         assertSourceContains(driver, 'Create A Circle')
+    }
+
+    @Test
+    public void newCircle_shouldSaveAndShowCircle() {
+        findAndClickButton(driver, 'newcircle')
+        def expectedCircleName = "name of circle ${Math.random()}"
+//        def expectedCircleDesc = "desc of circle ${Math.random()}"
+        enterText(driver, 'name', expectedCircleName)
+//        enterText(driver, 'description', expectedCircleDesc)
+        submit(driver)
+        
+        sleep 1000
+
+        findAndClickButton(driver, 'showcircles')
+        assertSourceContains(driver, expectedCircleName)
+//        assertSourceContains(driver, expectedCircleDesc)
     }
 
     @Before
@@ -85,7 +105,6 @@ class Login_wd_ITCase extends WebDriverRoot {
         findAndClickButton(driver, 'login')
         acceptGoogleAuth()
     }
-
 
     @After
     public void after() {
@@ -109,21 +128,24 @@ class Login_wd_ITCase extends WebDriverRoot {
             sleep 100
             button.click()
         } catch (Throwable e) {
-            e.printStackTrace()
             fail('cant authenticate');
         }
     }
 
-    private assertProfileFieldSavedAndShown(WebDriver driver, String fieldUnderTest) {
-        def expectedText = "some $fieldUnderTest"
+    private static assertProfileFieldSavedAndShown(WebDriver driver, String field) {
+        def expectedText = "some $field"
 
         findAndClickButton(driver, 'profile');
-        enterText(driver, fieldUnderTest, expectedText)
-        findAndClickButton(driver, 'submit')
+        enterText(driver, field, expectedText)
+        submit(driver)
         assertSourceContains(driver, expectedText)
     }
 
-    private enterText(WebDriver driver, String fieldUnderTest, GString expectedText) {
+    private static submit(WebDriver driver) {
+        findAndClickButton(driver, 'submit')
+    }
+
+    private static enterText(WebDriver driver, String fieldUnderTest, GString expectedText) {
         def ele = findElement(driver, fieldUnderTest)
         assertNotNull("couldnt find $fieldUnderTest", ele)
         ele.clear()
