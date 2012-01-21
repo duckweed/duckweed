@@ -19,3 +19,4 @@ Bio <%= request.session.person.bio %></br>
 
 
 <a href="newcircle.groovy" name="newcircle">create a circle</a><br/>
+<a href="showcircles.groovy" name="showcircles">show circles</a><br/>

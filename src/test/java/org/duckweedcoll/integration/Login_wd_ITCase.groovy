@@ -5,9 +5,11 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.openqa.selenium.By
+import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import static org.duckweedcoll.unit.WebDriverAssistant.*
 import static org.junit.Assert.assertNotNull
+import static org.junit.Assert.fail
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -44,18 +46,32 @@ class Login_wd_ITCase extends WebDriverRoot {
 
     @Test
     public void profileShouldContainANickname() {
-        assertProfileFieldSavedAndShown('username')
+        assertProfileFieldSavedAndShown(driver, 'username')
     }
 
     @Test
     public void profileShouldContainABio() {
-        assertProfileFieldSavedAndShown('bio')
+        assertProfileFieldSavedAndShown(driver, 'bio')
     }
 
     @Test
     public void shouldHaveNewCircleButton() {
         assertNotNull "should find a place to create a circle", findElement(driver, 'newcircle')
     }
+
+    @Test
+    public void shouldHaveShowCircleButton() {
+        findAndClickButton(driver, 'showcircles')
+        assertSourceContains(driver, 'Show Circles')
+    }
+
+    @Test
+    public void createCirclePageShouldHaveAName() {
+        findAndClickButton(driver, 'newcircle')
+        findElement(driver, 'name')
+        findElement(driver, 'description')
+    }
+
 
     @Test
     public void newCircleButtonShouldShow_title() {
@@ -85,23 +101,32 @@ class Login_wd_ITCase extends WebDriverRoot {
     }
 
     private acceptGoogleAuth() {
-        List<WebElement> elements = driver.findElements(By.cssSelector('input'))
-        WebElement button = elements.find {
-            it.getAttribute('value').trim() == 'Log In'
+        try {
+            List<WebElement> elements = driver.findElements(By.cssSelector('input'))
+            WebElement button = elements.find {
+                it.getAttribute('value').trim() == 'Log In'
+            }
+            sleep 100
+            button.click()
+        } catch (Throwable e) {
+            e.printStackTrace()
+            fail('cant authenticate');
         }
-        sleep 100
-        button.click()
     }
 
-    private assertProfileFieldSavedAndShown(String fieldUnderTest) {
+    private assertProfileFieldSavedAndShown(WebDriver driver, String fieldUnderTest) {
         def expectedText = "some $fieldUnderTest"
 
         findAndClickButton(driver, 'profile');
+        enterText(driver, fieldUnderTest, expectedText)
+        findAndClickButton(driver, 'submit')
+        assertSourceContains(driver, expectedText)
+    }
+
+    private enterText(WebDriver driver, String fieldUnderTest, GString expectedText) {
         def ele = findElement(driver, fieldUnderTest)
         assertNotNull("couldnt find $fieldUnderTest", ele)
         ele.clear()
         ele.sendKeys(expectedText)
-        findAndClickButton(driver, 'submit')
-        assertSourceContains(driver, expectedText)
     }
 }
