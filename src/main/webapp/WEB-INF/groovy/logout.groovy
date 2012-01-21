@@ -16,8 +16,6 @@
        specific language governing permissions and limitations
        under the License.
  */
-import com.google.appengine.api.users.UserServiceFactory
-
-session.invalidate()
+request.session.invalidate()
 
 forward users.createLogoutURL('/')

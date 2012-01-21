@@ -1,15 +1,13 @@
 package org.duckweedcoll.integration
 
+import org.duckweedcoll.WebDriverRoot
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import static org.duckweedcoll.unit.WebDriverAssistant.findAndClickButton
-import org.duckweedcoll.WebDriverRoot
-import org.openqa.selenium.WebElement
 import org.openqa.selenium.By
+import org.openqa.selenium.WebElement
+import static org.duckweedcoll.unit.WebDriverAssistant.*
 import static org.junit.Assert.assertNotNull
-import org.openqa.selenium.WebDriver
-import static org.duckweedcoll.unit.WebDriverAssistant.findElement
-import static org.duckweedcoll.unit.WebDriverAssistant.assertSourceContains
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -40,20 +38,40 @@ class Login_wd_ITCase extends WebDriverRoot {
 
     @Test
     public void shouldHaveProfileButton() {
-        assertNotNull "should find a place to enter their name", findElement(driver, 'profile')
+        assertNotNull "should find a profile button", findElement(driver, 'profile')
         assertSourceContains(driver, 'test@example.com')
     }
 
     @Test
-    public void shouldHaveAddCircleButton() {
+    public void shouldHaveNewCircleButton() {
         assertNotNull "should find a place to create a circle", findElement(driver, 'newcircle')
     }
 
+    @Test
+    public void newCircleButtonShouldShow_pageUnderConstruction() {
+        findAndClickButton(driver, 'newcircle')
+        assertSourceContains(driver, 'this functionality not yet available')
+    }
+
+
     @Before
     public void before() {
-        driver.get("http://localhost:8080");
+        driver.get("http://localhost:8080/logout.groovy");
         findAndClickButton(driver, 'login')
         acceptGoogleAuth()
+    }
+
+    @After
+    public void after() {
+        logout()
+    }
+
+    private logout() {
+        try {
+            findAndClickButton(driver, 'logout')
+        } catch (Exception e) {
+            // swallow this
+        }
     }
 
     private acceptGoogleAuth() {
