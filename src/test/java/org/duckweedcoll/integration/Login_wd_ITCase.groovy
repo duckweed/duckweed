@@ -52,30 +52,16 @@ class Login_wd_ITCase extends WebDriverRoot {
         assertProfileFieldSavedAndShown('bio')
     }
 
-    private assertProfileFieldSavedAndShown(String fieldUnderTest) {
-        def expectedText = "some $fieldUnderTest"
-
-        findAndClickButton(driver, 'profile');
-        def ele = findElement(driver, fieldUnderTest)
-        assertNotNull("couldnt find $fieldUnderTest", ele)
-        ele.clear()
-        ele.sendKeys(expectedText)
-        findAndClickButton(driver, 'submit')
-        assertSourceContains(driver, expectedText)
-    }
-
-
     @Test
     public void shouldHaveNewCircleButton() {
         assertNotNull "should find a place to create a circle", findElement(driver, 'newcircle')
     }
 
     @Test
-    public void newCircleButtonShouldShow_pageUnderConstruction() {
+    public void newCircleButtonShouldShow_title() {
         findAndClickButton(driver, 'newcircle')
-        assertSourceContains(driver, 'this functionality not yet available')
+        assertSourceContains(driver, 'Create A Circle')
     }
-
 
     @Before
     public void before() {
@@ -83,6 +69,7 @@ class Login_wd_ITCase extends WebDriverRoot {
         findAndClickButton(driver, 'login')
         acceptGoogleAuth()
     }
+
 
     @After
     public void after() {
@@ -106,4 +93,15 @@ class Login_wd_ITCase extends WebDriverRoot {
         button.click()
     }
 
+    private assertProfileFieldSavedAndShown(String fieldUnderTest) {
+        def expectedText = "some $fieldUnderTest"
+
+        findAndClickButton(driver, 'profile');
+        def ele = findElement(driver, fieldUnderTest)
+        assertNotNull("couldnt find $fieldUnderTest", ele)
+        ele.clear()
+        ele.sendKeys(expectedText)
+        findAndClickButton(driver, 'submit')
+        assertSourceContains(driver, expectedText)
+    }
 }
