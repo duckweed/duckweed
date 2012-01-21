@@ -29,6 +29,10 @@ public class WebDriverAssistant {
         Assert.assertTrue(message, driver.getPageSource().contains(expectedString));
     }
 
+    public static void assertSourceContains(WebDriver driver, String expectedString) {
+        assertSourceContains(driver, '', expectedString)
+    }
+
     public static String getCssSelectorText(WebDriver driver, String tag) {
         return driver.findElement(By.cssSelector(tag)).getText();
     }
@@ -42,10 +46,6 @@ public class WebDriverAssistant {
     }
 
     public static void findAndClickButton(WebDriver driver, text) {
-        List<WebElement> elements = driver.findElements(By.cssSelector('a'))
-        WebElement button = elements.find {
-            it.text == text
-        }
-        button.click()
+        driver.findElement(By.name(text)).click()
     }
 }

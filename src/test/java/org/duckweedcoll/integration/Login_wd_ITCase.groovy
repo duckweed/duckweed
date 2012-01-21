@@ -7,6 +7,9 @@ import org.duckweedcoll.WebDriverRoot
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.By
 import static org.junit.Assert.assertNotNull
+import org.openqa.selenium.WebDriver
+import static org.duckweedcoll.unit.WebDriverAssistant.findElement
+import static org.duckweedcoll.unit.WebDriverAssistant.assertSourceContains
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -30,32 +33,35 @@ import static org.junit.Assert.assertNotNull
 class Login_wd_ITCase extends WebDriverRoot {
     @Test
     public void shouldLoginAndLogout() {
-        findAndClickButton(driver, 'log in')
-        accceptGoogleAuth()
         driver.getPageSource().contains('Welcome test@example.com')
-        findAndClickButton(driver, 'log out')
-        findAndClickButton(driver, 'log out')
+        findAndClickButton(driver, 'logout')
+        assertNotNull driver.findElement(By.name('login'))
     }
 
     @Test
-    public void ifUserHasntBeenSeen_showPlaceToEnterUserName() {
-        findAndClickButton(driver, 'log in')
-        accceptGoogleAuth()
-        sleep 1000
-        assertNotNull "should find a place to enter their name", driver.findElement(By.name('username'))
+    public void shouldHaveProfileButton() {
+        assertNotNull "should find a place to enter their name", findElement(driver, 'profile')
+        assertSourceContains(driver, 'test@example.com')
     }
 
+    @Test
+    public void shouldHaveAddCircleButton() {
+        assertNotNull "should find a place to create a circle", findElement(driver, 'newcircle')
+    }
 
     @Before
     public void before() {
         driver.get("http://localhost:8080");
+        findAndClickButton(driver, 'login')
+        acceptGoogleAuth()
     }
 
-    private accceptGoogleAuth() {
+    private acceptGoogleAuth() {
         List<WebElement> elements = driver.findElements(By.cssSelector('input'))
         WebElement button = elements.find {
             it.getAttribute('value').trim() == 'Log In'
         }
+        sleep 100
         button.click()
     }
 

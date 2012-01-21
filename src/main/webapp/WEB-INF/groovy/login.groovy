@@ -17,4 +17,4 @@
        under the License.
  */
 
-response.sendRedirect(users.createLoginURL('/loggedin.groovy'));
+response.sendRedirect(users.createLoginURL('/'));
