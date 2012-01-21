@@ -43,6 +43,29 @@ class Login_wd_ITCase extends WebDriverRoot {
     }
 
     @Test
+    public void profileShouldContainANickname() {
+        assertProfileFieldSavedAndShown('username')
+    }
+
+    @Test
+    public void profileShouldContainABio() {
+        assertProfileFieldSavedAndShown('bio')
+    }
+
+    private assertProfileFieldSavedAndShown(String fieldUnderTest) {
+        def expectedText = "some $fieldUnderTest"
+
+        findAndClickButton(driver, 'profile');
+        def ele = findElement(driver, fieldUnderTest)
+        assertNotNull("couldnt find $fieldUnderTest", ele)
+        ele.clear()
+        ele.sendKeys(expectedText)
+        findAndClickButton(driver, 'submit')
+        assertSourceContains(driver, expectedText)
+    }
+
+
+    @Test
     public void shouldHaveNewCircleButton() {
         assertNotNull "should find a place to create a circle", findElement(driver, 'newcircle')
     }
