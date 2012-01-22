@@ -12,11 +12,10 @@ if(person == null){
     request.session.setAttribute('person', person);
 }
 %>
-<%= user.getNickname()%>
-<a href="logout.groovy" name="logout">log out </a><br/>
+<a href="newcircle.groovy" name="newcircle">create a circle</a>
+<a href="showcircles.groovy" name="showcircles">show circles</a><br/>
+<%= user.getNickname()%><BR/>
 Nick Name <%= request.session.person.username %></br>
 Bio <%= request.session.person.bio %></br>
 
 
-<a href="newcircle.groovy" name="newcircle">create a circle</a><br/>
-<a href="showcircles.groovy" name="showcircles">show circles</a><br/>

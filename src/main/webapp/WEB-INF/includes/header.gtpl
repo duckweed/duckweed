@@ -7,9 +7,16 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css"/>
 </head>
 <body>
-<a href="/">home</a>
+<div class='guff'>
+    duckweed
+    <a href="/">home</a>
 
-<div>
-<% if (user != null){%>
+    <% if (user != null){%>
     <a href="/showprofile.groovy" name="profile">profile</a>
-<%}%>
+    <a href="logout.groovy" name="logout">log out </a>
+    <%}else{%>
+    <a href="login.groovy" name='login'>log in</a>
+    <%}%>
+
+</div>
+<div class='guts'

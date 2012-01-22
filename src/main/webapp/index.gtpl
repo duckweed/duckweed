@@ -2,17 +2,9 @@
 
 <div class="main">
     <h1>Welcome to Duckweed Collaboration</h1>
-<%
-    if(user != null){
-    %>
+<% if(user != null){ %>
     <% include '/WEB-INF/includes/person.gtpl' %>
-    <%
-}else{
-%>
-<a href="login.groovy" name='login'>log in</a>
-<%
-}
-%>
+    <% } %>
 
 </div>
 

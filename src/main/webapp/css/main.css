@@ -17,11 +17,32 @@
        under the License.
  */
 body {
-	font-family: Arial;
-	margin: 30px;
+    font-family: Arial;
 }
 
 h1 {
-	color: #D33381;
-	border-bottom: black 3px dotted;
+    color: #b8860b;
+    background-color: #deb887;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.guff {
+    background-color: #ffe4c4;
+    font-size: smaller;
+    font-kerning: auto;
+    font-weight: bolder;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.guts {
+    background-color: #f5f5dc;
+    border-top-color: blue;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-bottom-color: blue;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    height: 500px;
 }
