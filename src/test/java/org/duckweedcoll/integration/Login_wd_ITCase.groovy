@@ -10,11 +10,6 @@ import org.openqa.selenium.WebElement
 import static org.duckweedcoll.unit.WebDriverAssistant.*
 import static org.junit.Assert.assertNotNull
 import static org.junit.Assert.fail
-import com.google.appengine.api.datastore.Query
-import com.google.appengine.api.datastore.FetchOptions
-import com.google.appengine.tools.development.testing.LocalServiceTestHelper
-import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig
-import groovyx.gaelyk.GaelykBindings
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -80,6 +75,7 @@ class Login_wd_ITCase extends WebDriverRoot {
     @Test
     public void newCircleButtonShouldShow_title() {
         findAndClickButton(driver, 'newcircle')
+        sleep 1000
         assertSourceContains(driver, 'Create A Circle')
     }
 
@@ -87,28 +83,28 @@ class Login_wd_ITCase extends WebDriverRoot {
     public void newCircle_shouldSaveAndShowCircle() {
         findAndClickButton(driver, 'newcircle')
         def expectedCircleName = "name of circle ${Math.random()}"
-//        def expectedCircleDesc = "desc of circle ${Math.random()}"
+        def expectedCircleDesc = "desc of circle ${Math.random()}"
         enterText(driver, 'name', expectedCircleName)
-//        enterText(driver, 'description', expectedCircleDesc)
+        enterText(driver, 'description', expectedCircleDesc)
         submit(driver)
-        
-        sleep 1000
+
+//        sleep 1000
 
         findAndClickButton(driver, 'showcircles')
         assertSourceContains(driver, expectedCircleName)
-//        assertSourceContains(driver, expectedCircleDesc)
+        assertSourceContains(driver, expectedCircleDesc)
     }
 
     @Before
     public void before() {
-        driver.get("http://localhost:8080/logout.groovy");
+        driver.get("http://localhost:8080");
+        logout()
         findAndClickButton(driver, 'login')
         acceptGoogleAuth()
     }
 
     @After
     public void after() {
-        logout()
     }
 
     private logout() {

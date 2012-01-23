@@ -22,4 +22,13 @@ if (user != null && request.session.getAttribute('person') == null) {
     assertNotNull "no person", request.session.person
 }
 
-forward '/index.gtpl'
+include '/WEB-INF/includes/header.gtpl'
+html.html{
+    h1 'Welcome to Duckweed Collaboration'
+}
+
+if(user !=null){
+    include '/WEB-INF/includes/person.gtpl'
+}
+
+include '/WEB-INF/includes/footer.gtpl'

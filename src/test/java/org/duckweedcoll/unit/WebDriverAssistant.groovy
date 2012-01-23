@@ -45,7 +45,7 @@ public class WebDriverAssistant {
         return driver.findElement(By.name(tag));
     }
 
-    public static void findAndClickButton(WebDriver driver, text) {
-        driver.findElement(By.name(text)).click()
+    public static void findAndClickButton(WebDriver driver, name) {
+        driver.findElement(By.name(name)).click()
     }
 }

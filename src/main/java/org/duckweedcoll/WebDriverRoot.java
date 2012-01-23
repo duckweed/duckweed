@@ -22,6 +22,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 
 public class WebDriverRoot {
 
@@ -34,6 +35,9 @@ public class WebDriverRoot {
 
     @BeforeClass
     public static void beforeClass() {
+//        FirefoxProfile fp = new FirefoxProfile();
+//        fp.setPreference("webdriver.load.strategy", "fast");
+//        driver = new FirefoxDriver(fp);
         driver = new FirefoxDriver();
     }
 }

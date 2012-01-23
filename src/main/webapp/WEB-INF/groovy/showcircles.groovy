@@ -14,9 +14,8 @@ html.html {
         circles.each {
             Entity circle ->
             tr {
-                td {
-                    p(circle.name)
-                }
+                td { p(circle.name) }
+                td { p(circle.description) }
             }
         }
     }
