@@ -8,9 +8,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import static org.duckweedcoll.unit.WebDriverAssistant.*
-import static org.junit.Assert.assertNotNull
-import static org.junit.Assert.fail
-import static org.junit.Assert.assertEquals
+import static org.junit.Assert.*
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -54,15 +52,18 @@ class Login_wd_ITCase extends WebDriverRoot {
 
     @Test
     public void testProfileInfoShouldBeAvailableNextClick() {
+        def expectedUsername = 'user name'
+        def expectedBio = 'a bit of a bio'
+
         findAndClickButton(driver, 'profile')
-        enterText(driver, 'username', 'user name')
-        enterText(driver, 'bio', 'a bit of a bio')
+        enterText(driver, 'username', expectedUsername)
+        enterText(driver, 'bio', expectedBio)
         submit(driver)
         findAndClickButton(driver, 'profile')
-        assertEquals('should find user name in the profile', 'user name', findElement(driver, 'username').getAttribute('value'))
-        assertEquals('should find user bio in the profile', 'a bit of a bio', findElement(driver, 'bio').text)
-    }
 
+        assertFieldContainsValue(driver, 'username', expectedUsername)
+        assertFieldContainsValue(driver, 'bio', expectedBio)
+    }
 
     @Test
     public void profileShouldContainABio() {

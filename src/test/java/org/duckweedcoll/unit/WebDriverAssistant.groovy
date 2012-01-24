@@ -49,4 +49,30 @@ public class WebDriverAssistant {
         driver.findElement(By.name(name)).click()
     }
 
+    static assertFieldContainsValue(WebDriver driver, String field, String value) {
+        WebElement element = findElement(driver, field)
+        def text = ''
+        text = amIaTextArea(element, text)
+        text = amIanInputField(text, element)
+        assertEquals("should find '$value' in field '$field'", value, text)
+    }
+
+    private static String amIanInputField(String text, WebElement element) {
+        if (text == '') {
+            try {
+                text = element.getAttribute('value')
+            } catch (Exception e) {
+
+            }
+        }
+        return text
+    }
+
+    private static String amIaTextArea(WebElement element, String text) {
+        try {
+            text = element.text
+        } catch (Exception e) {
+        }
+        return text
+    }
 }
