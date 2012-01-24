@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement
 import static org.duckweedcoll.unit.WebDriverAssistant.*
 import static org.junit.Assert.assertNotNull
 import static org.junit.Assert.fail
+import static org.junit.Assert.assertEquals
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -31,6 +32,8 @@ import static org.junit.Assert.fail
  */
 class Login_wd_ITCase extends WebDriverRoot {
 
+    def username = Math.random() + ""
+
     @Test
     public void shouldLoginAndLogout() {
         driver.getPageSource().contains('Welcome test@example.com')
@@ -41,17 +44,29 @@ class Login_wd_ITCase extends WebDriverRoot {
     @Test
     public void shouldHaveProfileButton() {
         assertNotNull "should find a profile button", findElement(driver, 'profile')
-        assertSourceContains(driver, 'test@example.com')
+        assertSourceContains(driver, username)
     }
 
     @Test
     public void profileShouldContainANickname() {
-        assertProfileFieldSavedAndShown(driver, 'username')
+        assertProfileFieldSavedAndShownOnHomePage(driver, 'username')
     }
 
     @Test
+    public void testProfileInfoShouldBeAvailableNextClick() {
+        findAndClickButton(driver, 'profile')
+        enterText(driver, 'username', 'user name')
+        enterText(driver, 'bio', 'a bit of a bio')
+        submit(driver)
+        findAndClickButton(driver, 'profile')
+        assertEquals('should find user name in the profile', 'user name', findElement(driver, 'username').getAttribute('value'))
+        assertEquals('should find user bio in the profile', 'a bit of a bio', findElement(driver, 'bio').text)
+    }
+
+
+    @Test
     public void profileShouldContainABio() {
-        assertProfileFieldSavedAndShown(driver, 'bio')
+        assertProfileFieldSavedAndShownOnHomePage(driver, 'bio')
     }
 
     @Test
@@ -117,6 +132,9 @@ class Login_wd_ITCase extends WebDriverRoot {
 
     private acceptGoogleAuth() {
         try {
+            WebElement email = driver.findElement(By.name('email'))
+            email.clear()
+            email.sendKeys(username)
             List<WebElement> elements = driver.findElements(By.cssSelector('input'))
             WebElement button = elements.find {
                 it.getAttribute('value').trim() == 'Log In'
@@ -128,7 +146,7 @@ class Login_wd_ITCase extends WebDriverRoot {
         }
     }
 
-    private static assertProfileFieldSavedAndShown(WebDriver driver, String field) {
+    static assertProfileFieldSavedAndShownOnHomePage(WebDriver driver, String field) {
         def expectedText = "some $field"
 
         findAndClickButton(driver, 'profile');
@@ -141,7 +159,7 @@ class Login_wd_ITCase extends WebDriverRoot {
         findAndClickButton(driver, 'submit')
     }
 
-    private static enterText(WebDriver driver, String fieldUnderTest, GString expectedText) {
+    private static enterText(WebDriver driver, String fieldUnderTest, String expectedText) {
         def ele = findElement(driver, fieldUnderTest)
         assertNotNull("couldnt find $fieldUnderTest", ele)
         ele.clear()

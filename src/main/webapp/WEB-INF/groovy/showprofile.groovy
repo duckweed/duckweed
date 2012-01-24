@@ -1,14 +1,13 @@
-
 include '/WEB-INF/includes/header.gtpl'
 
 html.html {
     h1 'New User Details'
     form(action: 'profile.groovy') {
         p('Nick Name')
-        input(type: 'text', name: 'username') { request.session.person.username }
+        input(type: 'text', name: 'username', value:request.session.person.username)
         p('Bio')
-        input(type: 'text', name: 'bio') { request.session.person.bio }
-        input(type:'submit', name:'submit')
+        textarea(name: 'bio', rows: 10, cols: 100) { mkp.yield request.session.person.bio }
+        input(type: 'submit', name: 'submit')
     }
 }
 

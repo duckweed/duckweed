@@ -48,4 +48,5 @@ public class WebDriverAssistant {
     public static void findAndClickButton(WebDriver driver, name) {
         driver.findElement(By.name(name)).click()
     }
+
 }

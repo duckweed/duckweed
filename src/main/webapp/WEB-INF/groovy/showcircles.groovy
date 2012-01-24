@@ -10,11 +10,15 @@ include '/WEB-INF/includes/header.gtpl'
 html.html {
     h1 'Show Circles'
     table {
-        p("found ${circles.size()} circles")
+        h2 "found ${circles.size()} circles"
         circles.each {
             Entity circle ->
             tr {
-                td { p(circle.name) }
+                td {
+                    a(href: "newcircle.groovy?key=$circle.key.id") {
+                        p(circle.name)
+                    }
+                }
                 td { p(circle.description) }
             }
         }
