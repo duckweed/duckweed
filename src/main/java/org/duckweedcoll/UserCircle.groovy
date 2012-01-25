@@ -26,16 +26,13 @@ import com.google.appengine.api.datastore.Email
 class UserCircle {
 
     Entity createUser(String name, String address, String email) {
-        createUser(name, address, new Email(email))
-    }
-
-    Entity createUser(String name, String address, Email email) {
         def entity = new Entity('user')
-        entity.setProperty 'email', email
+        entity.setProperty 'email', new Email(email)
         entity.setProperty 'address', address
         entity.setProperty 'name', name
         entity
     }
+
 
     Entity createCircle(String circleName, Entity initialOwner) {
         Entity circle = new Entity('circle')
@@ -48,12 +45,12 @@ class UserCircle {
     }
 
     Entity addCircleToUser(Entity user1, Entity circle) {
-        def circles = user1.getProperty 'circles'
+        def circles = user1.getProperty('circles')
         user1.setProperty 'circles', [] + circles + circle.getKey()
     }
 
     Entity addOwnerToCircle(Entity circle2, Entity user2) {
-        def owners = circle2.getProperty 'owner'
+        def owners = circle2.getProperty('owner')
         circle2.setProperty 'owner', [] + owners + user2.getKey()
     }
 

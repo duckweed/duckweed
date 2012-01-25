@@ -7,7 +7,7 @@ import org.junit.Test
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import static org.duckweedcoll.unit.WebDriverAssistant.*
+import static org.duckweedcoll.util.WebDriverAssistant.*
 import static org.junit.Assert.*
 
 /*
