@@ -13,6 +13,7 @@ import static org.duckweedcoll.Circle.createCircle
 import static org.duckweedcoll.Circle.makeCall
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertNotNull
+import static org.junit.Assert.assertNull
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -74,8 +75,7 @@ class Circle_Test extends GaelykTestBase{
         assertNotNull newCircle
         assertEquals 'some name', newCircle.getProperty('name')
     }
-
-
+    
     @Test
     public void ifKeyFound_resetDataOnDatastore() throws Exception {
         Entity circle = createCircle(['name': 'some name'], datastore)
@@ -83,6 +83,12 @@ class Circle_Test extends GaelykTestBase{
         def newCircle = getSingleCircle()
         assertNotNull newCircle
         assertEquals 'new name', newCircle.getProperty('name')
+    }
+
+    @Test
+    public void ifNoKeyFound_NoCircleAdded() throws Exception{
+        makeCall([:], datastore, response)
+        assertNull 'should not add a circle to datastore', getSingleCircle()
     }
 
 

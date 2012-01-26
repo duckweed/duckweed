@@ -37,8 +37,7 @@ class Circle {
         Entity circle = null
         if (params.isEmpty()) {
             circle = new Entity('circle')
-            datastore.put circle
-            fillAndSaveCircle(datastore, params, circle)
+            fillCircle(params, circle)
             circle
         }
         else if (params['key'] != null) {
