@@ -3,7 +3,7 @@ import com.google.appengine.api.datastore.FetchOptions
 import com.google.appengine.api.datastore.Query
 
 def query = new Query('circle')
-def circles = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(100))
+def circles = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(1000))
 
 include '/WEB-INF/includes/header.gtpl'
 
@@ -14,12 +14,12 @@ html.html {
         circles.each {
             Entity circle ->
             tr {
-                td {
+                td('name':'circle-name') {
                     a(href: "newcircle.groovy?key=$circle.key.id") {
                         p(circle.name)
                     }
                 }
-                td { p(circle.description) }
+                td('name':'circle-description') { p(circle.description) }
             }
         }
     }

@@ -1,6 +1,5 @@
 import org.duckweedcoll.Circle
 import static org.junit.Assert.assertNotNull
-import org.duckweedcoll.Circle
 
 log.info 'entering newcircle - params to follow:'
 
@@ -22,11 +21,9 @@ html.html {
     h1 'Create A Circle'
     form(method: 'post') {
         p('name')
-        input(name: 'name', type: 'text',)
+        input(name: 'name', type: 'text', 'value': circle.name)
         p('description')
-        textarea(name: 'description', rows: 5, cols: 50) {
-            p(circle.description)
-        }
+        textarea(name: 'description', rows: 5, cols: 50) {mkp.yield circle.description}
         input(name: 'submit', type: 'submit')
     }
 }
