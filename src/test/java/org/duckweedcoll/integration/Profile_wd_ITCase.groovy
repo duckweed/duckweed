@@ -7,10 +7,8 @@ import org.junit.Before
 import org.junit.Test
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
-
-import static org.junit.Assert.assertNotNull
-
 import static org.duckweedcoll.util.WebDriverAssistant.*
+import static org.junit.Assert.assertNotNull
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -30,15 +28,39 @@ import static org.duckweedcoll.util.WebDriverAssistant.*
        specific language governing permissions and limitations
        under the License.
  */
-class Login_wd_ITCase extends WebDriverRoot {
+class Profile_wd_ITCase extends WebDriverRoot {
 
     def username = createRandomUserName()
 
     @Test
-    public void shouldLoginAndLogout() {
-        driver.getPageSource().contains('Welcome test@example.com')
-        findAndClickButton(driver, 'logout')
-        assertNotNull driver.findElement(By.name('login'))
+    public void shouldHaveProfileButton() {
+        assertNotNull "should find a profile button", findElement(driver, 'profile')
+        assertSourceContains(driver, username)
+    }
+
+    @Test
+    public void profileShouldContainANickname() {
+        assertProfileFieldSavedAndShownOnHomePage(driver, 'username')
+    }
+
+    @Test
+    public void testProfileInfoShouldBeAvailableNextClick() {
+        def expectedUsername = 'user name'
+        def expectedBio = 'a bit of a bio'
+
+        findAndClickButton(driver, 'profile')
+        enterText(driver, 'username', expectedUsername)
+        enterText(driver, 'bio', expectedBio)
+        submit(driver)
+        findAndClickButton(driver, 'profile')
+
+        assertFieldContainsValue(driver, 'username', expectedUsername)
+        assertFieldContainsValue(driver, 'bio', expectedBio)
+    }
+
+    @Test
+    public void profileShouldContainABio() {
+        assertProfileFieldSavedAndShownOnHomePage(driver, 'bio')
     }
 
     @Before
@@ -52,5 +74,15 @@ class Login_wd_ITCase extends WebDriverRoot {
     @After
     public void after() {
     }
+
+    static assertProfileFieldSavedAndShownOnHomePage(WebDriver driver, String field) {
+        def expectedText = "some $field"
+
+        findAndClickButton(driver, 'profile');
+        enterText(driver, field, expectedText)
+        submit(driver)
+        assertSourceContains(driver, expectedText)
+    }
+
 
 }

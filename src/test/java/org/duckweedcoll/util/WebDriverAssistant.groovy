@@ -23,6 +23,8 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import static org.junit.Assert.assertEquals
+import static org.junit.Assert.fail
+import org.apache.commons.lang.RandomStringUtils
 
 public class WebDriverAssistant {
     public static void assertSourceContains(WebDriver driver, String message, String expectedString) {
@@ -74,5 +76,53 @@ public class WebDriverAssistant {
         } catch (Exception e) {
         }
         return text
+    }
+
+    static logout(def driver) {
+        try {
+            findAndClickButton(driver, 'logout')
+        } catch (Exception e) {
+            // swallow this
+        }
+    }
+
+    static acceptGoogleAuth(def driver, def username) {
+        try {
+            WebElement email = driver.findElement(By.name('email'))
+            email.clear()
+            email.sendKeys(username)
+            List<WebElement> elements = driver.findElements(By.cssSelector('input'))
+            WebElement button = elements.find {
+                it.getAttribute('value').trim() == 'Log In'
+            }
+            sleep 100
+            button.click()
+        } catch (Throwable e) {
+            fail('cant authenticate');
+        }
+    }
+
+
+    static submit(WebDriver driver) {
+        findAndClickButton(driver, 'submit')
+    }
+
+    static enterText(WebDriver driver, String fieldUnderTest, String expectedText) {
+        def ele = findElement(driver, fieldUnderTest)
+        Assert.assertNotNull("couldnt find $fieldUnderTest", ele)
+        ele.clear()
+        ele.sendKeys(expectedText)
+    }
+
+    static String createRandomUserName() {
+        return oneRandomUpperCaseLetter() + lowerCaseNameOfLength(4) + ' ' + oneRandomUpperCaseLetter() + lowerCaseNameOfLength(9)
+    }
+
+    static String oneRandomUpperCaseLetter() {
+        return RandomStringUtils.random(1, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    }
+
+    static String lowerCaseNameOfLength(int length) {
+        return RandomStringUtils.random(length, true, false).toLowerCase()
     }
 }
