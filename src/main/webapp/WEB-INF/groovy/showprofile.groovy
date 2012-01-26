@@ -1,7 +1,10 @@
 include '/WEB-INF/includes/header.gtpl'
 
+
+html.html { h1 'New User Details' }
+include '/WEB-INF/includes/person.gtpl'
+
 html.html {
-    h1 'New User Details'
     form(action: 'profile.groovy') {
         p('Nick Name')
         input(type: 'text', name: 'username', value:request.session.person.username)

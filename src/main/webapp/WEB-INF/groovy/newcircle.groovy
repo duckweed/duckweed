@@ -8,7 +8,6 @@ params.each {
     log.info "$key, $value"
 }
 
-
 def circle = Circle.makeCall(params, datastore, response)
 
 assertNotNull 'circle not found', circle
@@ -17,8 +16,15 @@ assertNotNull 'circle.desc not found', circle.description
 
 include '/WEB-INF/includes/header.gtpl'
 
+def header = 'Create A Circle'
+
 html.html {
-    h1 'Create A Circle'
+    h1 header
+}
+include '/WEB-INF/includes/person.gtpl'
+
+
+html.html{
     form(method: 'post') {
         p('name')
         input(name: 'name', type: 'text', 'value': circle.name)

@@ -7,19 +7,22 @@ def circles = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(100
 
 include '/WEB-INF/includes/header.gtpl'
 
+html.html { h1 'Show Circles' }
+include '/WEB-INF/includes/person.gtpl'
+
+
 html.html {
-    h1 'Show Circles'
     table {
         h2 "found ${circles.size()} circles"
         circles.each {
             Entity circle ->
             tr {
-                td('name':'circle-name') {
+                td('name': 'circle-name') {
                     a(href: "newcircle.groovy?key=$circle.key.id") {
                         p(circle.name)
                     }
                 }
-                td('name':'circle-description') { p(circle.description) }
+                td('name': 'circle-description') { p(circle.description) }
             }
         }
     }

@@ -2,6 +2,8 @@
 <%import com.google.appengine.api.datastore.Query%>
 <%import com.google.appengine.api.datastore.Entity%>
 
+<div class="actionbar">
+
 <%
 Entity person = request.session.getAttribute('person')
 if(person == null){
@@ -13,9 +15,10 @@ if(person == null){
 }
 %>
 <a href="newcircle.groovy" name="newcircle">create a circle</a>
-<a href="showcircles.groovy" name="showcircles">show circles</a><br/>
-<%= user.getNickname()%><BR/>
-Nick Name <%= request.session.person.username %></br>
-Bio <%= request.session.person.bio %></br>
+<a href="showcircles.groovy" name="showcircles">show circles</a>
+<%= user.getNickname()%>
+<%= request.session.person.username %>
+<%= request.session.person.bio %>
 
+</div>
 

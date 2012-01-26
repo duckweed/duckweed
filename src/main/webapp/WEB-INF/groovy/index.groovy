@@ -23,9 +23,8 @@ if (user != null && request.session.getAttribute('person') == null) {
 }
 
 include '/WEB-INF/includes/header.gtpl'
-html.html{
-    h1 'Welcome to Duckweed Collaboration'
-}
+html.html{ h1 'Welcome to Duckweed Collaboration' }
+
 
 if(user !=null){
     include '/WEB-INF/includes/person.gtpl'

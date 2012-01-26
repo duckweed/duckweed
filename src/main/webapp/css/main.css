@@ -32,8 +32,8 @@ h1 {
     font-size: smaller;
     font-kerning: auto;
     font-weight: bolder;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;*/
 }
 
 .guts {
@@ -47,6 +47,21 @@ h1 {
     height: 500px;
 }
 
-.home-button{
+.home-button {
     color: gray;
 }
+
+.actionbar {
+    font-size: smaller;
+    font-kerning: auto;
+    font-weight: bolder;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
