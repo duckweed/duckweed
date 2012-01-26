@@ -6,11 +6,11 @@ if (user != null && request.session.getAttribute('person') == null) {
     Entity person = request.session.getAttribute('person')
     if (person == null) {
         def id = user.getUserId()
-        def query = new Query('user')
+        def query = new Query('person')
         query.addFilter("id", Query.FilterOperator.EQUAL, id)
         person = datastore.prepare(query).asSingleEntity();
         if(person == null){
-            person = new Entity('user')
+            person = new Entity('person')
             person.setProperty 'id', id
             person.setProperty 'username', ''
             person.setProperty 'bio', ''

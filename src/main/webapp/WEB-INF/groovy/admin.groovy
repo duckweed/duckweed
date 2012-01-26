@@ -7,7 +7,7 @@ include '/WEB-INF/includes/header.gtpl'
 html.html{
     h1 'show everything'
     body{
-        def query = new Query('user')
+        def query = new Query('person')
         def users = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(1000))
         h2 "users (${users.size()})"
 

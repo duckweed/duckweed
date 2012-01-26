@@ -26,7 +26,7 @@ import com.google.appengine.api.datastore.Email
 class UserCircle {
 
     Entity createUser(String name, String address, String email) {
-        def entity = new Entity('user')
+        def entity = new Entity('person')
         entity.setProperty 'email', new Email(email)
         entity.setProperty 'address', address
         entity.setProperty 'name', name

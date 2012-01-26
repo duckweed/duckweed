@@ -1,13 +1,13 @@
 import com.google.appengine.api.datastore.Entity
 import com.google.appengine.api.datastore.Query
 
-def query = new Query('user')
+def query = new Query('person')
 def id = user.getUserId()
 query.addFilter("id", Query.FilterOperator.EQUAL, id)
 def person = datastore.prepare(query).asSingleEntity();
 
 if (person == null) {
-    person = new Entity('user')
+    person = new Entity('person')
     person.setProperty 'id', id
     person.setProperty 'username', ''
     person.setProperty 'bio', ''

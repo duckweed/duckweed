@@ -5,7 +5,7 @@ log.info 'in loggedin.groovy'
 request.getSession true
 
 def id = user.getUserId()
-def query = new Query('user')
+def query = new Query('person')
 query.addFilter("id", Query.FilterOperator.EQUAL, id)
 def person = datastore.prepare(query).asSingleEntity();
 if (person == null) {

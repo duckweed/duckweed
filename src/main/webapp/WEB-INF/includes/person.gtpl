@@ -8,7 +8,7 @@
 Entity person = request.session.getAttribute('person')
 if(person == null){
     def id = user.getUserId()
-    def query = new Query('user')
+    def query = new Query('person')
     query.addFilter("id", Query.FilterOperator.EQUAL, id)
     person = datastore.prepare(query).asSingleEntity();
     request.session.setAttribute('person', person);
