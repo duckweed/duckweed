@@ -9,7 +9,10 @@ import static org.junit.Assert.assertNotNull
 /**
  * Copyright AdScale GmbH, Germany, 2007
  */
-class CreateCircle {
+class Circle {
+
+    static List MANDATORY_FIELDS = ['name', 'description']
+
 
     static def makeCall(LinkedHashMap params, DatastoreService datastore, HttpServletResponse response) {
         assertNotNull params
@@ -29,9 +32,6 @@ class CreateCircle {
         else {
             circle = createCircle(params, datastore)
         }
-        assertNotNull 'circle is invalid here', circle
-        assertNotNull 'circle is invalid here', circle.getProperty('name')
-        assertNotNull 'circle is invalid here', circle.getProperty('description')
 
         circle
     }
@@ -44,8 +44,9 @@ class CreateCircle {
 
 
     static fillCircle(LinkedHashMap params, Entity circle) {
-        setProperty(params, circle, 'name')
-        setProperty(params, circle, 'description')
+        MANDATORY_FIELDS.each {
+            setProperty(params, circle, it)
+        }
     }
 
 
