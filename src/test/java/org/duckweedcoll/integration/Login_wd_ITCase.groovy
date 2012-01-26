@@ -103,9 +103,7 @@ class Login_wd_ITCase extends WebDriverRoot {
         enterText(driver, 'name', expectedCircleName)
         enterText(driver, 'description', expectedCircleDesc)
         submit(driver)
-
-//        sleep 1000
-
+        driver.get("http://localhost:8080");
         findAndClickButton(driver, 'showcircles')
         assertSourceContains(driver, expectedCircleName)
         assertSourceContains(driver, expectedCircleDesc)

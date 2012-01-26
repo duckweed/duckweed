@@ -37,14 +37,7 @@ import static org.junit.Assert.assertEquals
 @GaelykBindings
 class GaelykBindings_DemoTest {
 
-    LocalServiceTestHelper helper
     UserCircle userCircle = new UserCircle()
-
-
-    @Test
-    public void test() throws Exception {
-        //        fail('kjhkdsfhkjhsdfkjhdfsjk')
-    }
 
 
     @Test
@@ -66,6 +59,9 @@ class GaelykBindings_DemoTest {
         assertEquals('should get correct address', expectedAddress, user.getProperty('address'))
         assertEquals('should get correct name   ', expectedName, user.getProperty('name'))
     }
+
+
+    LocalServiceTestHelper helper
 
 
     @Before

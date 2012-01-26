@@ -1,22 +1,19 @@
-import com.google.appengine.api.datastore.Entity
+import org.duckweedcoll.CreateCircle
+import static org.junit.Assert.assertNotNull
 
-def circle = new Entity('circle')
+log.info 'entering newcircle - params to follow:'
 
-if (params.submit != null) {
-    if (params.name == '') {
-        // error
-    } else {
-        circle = new Entity('circle')
-        circle << params
-        datastore.put circle
-        redirect '/'
-    }
-} else {
-    if (params.key != null) {
-//        KeyFactory.createKey('circle')
-        circle = datastore.get('circle', params.key as Integer)
-    }
+params.each {
+    String key, String value ->
+    log.info "$key, $value"
 }
+
+
+def circle = CreateCircle.makeCall(params, datastore, response)
+
+assertNotNull 'circle not found', circle
+assertNotNull 'circle.name not found', circle.name
+assertNotNull 'circle.desc not found', circle.description
 
 include '/WEB-INF/includes/header.gtpl'
 
@@ -24,7 +21,7 @@ html.html {
     h1 'Create A Circle'
     form(method: 'post') {
         p('name')
-        input(name: 'name', type: 'text', )
+        input(name: 'name', type: 'text',)
         p('description')
         textarea(name: 'description', rows: 5, cols: 50) {
             p(circle.description)
