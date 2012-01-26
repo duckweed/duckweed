@@ -17,14 +17,14 @@ class CreateCircle {
         assertNotNull response
         Entity circle = null
         if (params.isEmpty()) {
-            circle =  createCircle(params, datastore)
+            circle = new Entity('circle')
+            datastore.put circle
+            fillAndSaveCircle(datastore, params, circle)
+            circle
         }
         else if (params['key'] != null) {
             circle = datastore.get(KeyFactory.createKey('circle', params['key'] as Integer))
-
-            setProperty(params, circle, 'name')
-            setProperty(params, circle, 'description')
-            datastore.put circle
+            fillAndSaveCircle(datastore, params, circle)
         }
         else {
             circle = createCircle(params, datastore)
@@ -34,6 +34,18 @@ class CreateCircle {
         assertNotNull 'circle is invalid here', circle.getProperty('description')
 
         circle
+    }
+
+
+    static fillAndSaveCircle(DatastoreService datastore, LinkedHashMap params, Entity circle) {
+        fillCircle(params, circle)
+        datastore.put circle
+    }
+
+
+    static fillCircle(LinkedHashMap params, Entity circle) {
+        setProperty(params, circle, 'name')
+        setProperty(params, circle, 'description')
     }
 
 

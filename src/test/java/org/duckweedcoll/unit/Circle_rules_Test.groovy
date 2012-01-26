@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull
  */
 
 @GaelykBindings
-class CreateCircle_Test {
+class Circle_rules_Test {
 
     Map params = [:]
 
@@ -82,16 +82,12 @@ class CreateCircle_Test {
         assertCallReturnsGoodCircle([:])
     }
 
-
     private assertCallReturnsGoodCircle(LinkedHashMap prm) {
         def returnedEntity = makeCall(prm, datastore, response)
         assertNotNull returnedEntity
         assertNotNull returnedEntity.getProperty('name')
         assertNotNull returnedEntity.getProperty('description')
     }
-
-
-
 
     private Entity getSingleCircle() {
         Query q = new Query('circle')
