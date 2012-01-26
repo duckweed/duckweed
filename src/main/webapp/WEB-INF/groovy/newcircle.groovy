@@ -24,8 +24,11 @@ html.html {
 include '/WEB-INF/includes/person.gtpl'
 
 
-html.html{
+html.html {
     form(method: 'post') {
+        if (circle.getProperty('key') != null) {
+            input(name: 'key', type: 'hidden', 'value': circle.key.id)
+        }
         p('name')
         input(name: 'name', type: 'text', 'value': circle.name)
         p('description')

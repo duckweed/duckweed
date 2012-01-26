@@ -5,7 +5,7 @@ import com.google.appengine.api.datastore.Entity
 include '/WEB-INF/includes/header.gtpl'
 
 html.html{
-    h1 'show eveything'
+    h1 'show everything'
     body{
         def query = new Query('user')
         def users = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(1000))

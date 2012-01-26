@@ -40,6 +40,15 @@ class Circle {
             fillCircle(params, circle)
             circle
         }
+        else if (params['submit'] != null) {
+            if (params['key'] != null) {
+                circle = datastore.get(KeyFactory.createKey('circle', params['key'] as Integer))
+            }else{
+                circle = fillCircle(params, new Entity('circle'))
+            }
+            fillAndSaveCircle(datastore, params, circle)
+            response.sendRedirect('/')
+        }
         else if (params['key'] != null) {
             circle = datastore.get(KeyFactory.createKey('circle', params['key'] as Integer))
             fillAndSaveCircle(datastore, params, circle)
@@ -58,10 +67,11 @@ class Circle {
     }
 
 
-    static fillCircle(LinkedHashMap params, Entity circle) {
+    static Entity fillCircle(LinkedHashMap params, Entity circle) {
         MANDATORY_FIELDS.each {
             setProperty(params, circle, it)
         }
+        circle
     }
 
 

@@ -84,6 +84,32 @@ class Circle_Test extends GaelykTestBase{
         assertNotNull newCircle
         assertEquals 'new name', newCircle.getProperty('name')
     }
+    
+    @Test
+    public void ifSubmitted_shouldRedirectToHome() throws Exception{
+        makeCall(['submit':'someVal', 'name': 'new name'], datastore, response)
+        assertEquals('should have redirected', '/', redirect)
+        def circle = getSingleCircle()
+        assertNotNull circle
+        assertNotNull circle.key
+        assertNotNull circle.getProperty('name')
+        assertNotNull circle.getProperty('description')
+    }
+    
+
+    @Test
+    public void ifSubmittedWithKey_updateThatKey() throws Exception{
+        def iniCircle = createCircle(['name': 'name', 'description': 'description'], datastore)
+
+        makeCall(['submit':'someVal', 'name': 'new name','description':'new description', 'key':iniCircle.key.id], datastore, response)
+        assertEquals('should have redirected', '/', redirect)
+        def circle = getSingleCircle()
+        assertNotNull 'should find one circle', circle
+        assertEquals 'keys should be equal', iniCircle.key.id, circle.key.id
+        assertEquals 'name should be updated', 'new name', circle.getProperty('name')
+        assertEquals 'description should be updated', 'new description', circle.getProperty('description')
+    }
+
 
     @Test
     public void ifNoKeyFound_NoCircleAdded() throws Exception{
