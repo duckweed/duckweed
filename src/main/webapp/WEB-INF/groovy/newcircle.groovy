@@ -1,13 +1,6 @@
 import org.duckweedcoll.Circle
 import static org.junit.Assert.assertNotNull
 
-log.info 'entering newcircle - params to follow:'
-
-params.each {
-    String key, String value ->
-    log.info "$key, $value"
-}
-
 def circle = Circle.makeCall(params, datastore, response)
 
 assertNotNull 'circle not found', circle

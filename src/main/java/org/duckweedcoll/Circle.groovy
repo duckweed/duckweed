@@ -29,6 +29,7 @@ class Circle {
 
     static List MANDATORY_FIELDS = ['name', 'description']
 
+    static String NEW_CIRCLE_TAG = 'newcircle'
 
     static def makeCall(LinkedHashMap params, DatastoreService datastore, HttpServletResponse response) {
         assertNotNull params

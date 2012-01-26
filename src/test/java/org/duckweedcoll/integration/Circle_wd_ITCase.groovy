@@ -4,18 +4,17 @@ import org.duckweedcoll.WebDriverRoot
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.openqa.selenium.By
 import static org.duckweedcoll.util.WebDriverAssistant.acceptGoogleAuth
 import static org.duckweedcoll.util.WebDriverAssistant.assertSourceContains
+import static org.duckweedcoll.util.WebDriverAssistant.assertTagWithTextExists
 import static org.duckweedcoll.util.WebDriverAssistant.createRandomUserName
 import static org.duckweedcoll.util.WebDriverAssistant.enterText
 import static org.duckweedcoll.util.WebDriverAssistant.findAndClickButton
 import static org.duckweedcoll.util.WebDriverAssistant.findElement
+import static org.duckweedcoll.util.WebDriverAssistant.gotoCircle
 import static org.duckweedcoll.util.WebDriverAssistant.logout
 import static org.duckweedcoll.util.WebDriverAssistant.submit
 import static org.junit.Assert.assertNotNull
-import org.openqa.selenium.WebElement
-import static org.junit.Assert.assertFalse
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -55,7 +54,7 @@ class Circle_wd_ITCase extends WebDriverRoot {
 
     @Test
     public void createCirclePageShouldHaveAName() {
-        findAndClickButton(driver, 'newcircle')
+        gotoCircle(driver)
         findElement(driver, 'name')
         findElement(driver, 'description')
     }
@@ -63,39 +62,25 @@ class Circle_wd_ITCase extends WebDriverRoot {
 
     @Test
     public void newCircleButtonShouldShow_title() {
-        findAndClickButton(driver, 'newcircle')
+        gotoCircle(driver)
         assertSourceContains(driver, 'Create A Circle')
     }
 
 
     @Test
     public void canCreateCircleAndFindItInShowCircles() {
-        findAndClickButton(driver, 'newcircle')
+        gotoCircle(driver)
         def expectedCircleName = "name of circle ${Math.random()}"
         def expectedCircleDesc = "desc of circle ${Math.random()}"
         enterText(driver, 'name', expectedCircleName)
         enterText(driver, 'description', expectedCircleDesc)
         submit(driver)
 
-//        TODO: should return to home page
-        driver.get("http://localhost:8080");
         findAndClickButton(driver, 'showcircles')
 
-        assertTagWithTextExists('circle-name', expectedCircleName)
-        assertTagWithTextExists('circle-description', expectedCircleDesc)
+        assertTagWithTextExists(driver, 'circle-name', expectedCircleName)
+        assertTagWithTextExists(driver, 'circle-description', expectedCircleDesc)
     }
-
-
-    private assertTagWithTextExists(String tagName, expectedValue) {
-        List<WebElement> elements = driver.findElements(By.name(tagName))
-
-        assertFalse("can't find any elements with name '$tagName', while looking for '$expectedValue'", elements.isEmpty())
-        assertNotNull "cant't find '$tagName' with text '$expectedValue'", elements.find {
-            def tagEqualsText = it.text.trim() == expectedValue.trim()
-            tagEqualsText
-        }
-    }
-
 
 
     @Before
