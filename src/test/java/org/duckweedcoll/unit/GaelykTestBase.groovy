@@ -1,4 +1,10 @@
-package org.duckweedcoll;
+package org.duckweedcoll.unit
+
+import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig
+import com.google.appengine.tools.development.testing.LocalServiceTestHelper
+import groovyx.gaelyk.GaelykBindings
+import org.junit.After
+import org.junit.Before
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -18,20 +24,18 @@ package org.duckweedcoll;
        specific language governing permissions and limitations
        under the License.
  */
-public class Sum {
 
-    private int a;
-    private int b;
+class GaelykTestBase {
+    LocalServiceTestHelper helper
 
-    public void setA(int a) {
-        this.a = a;
+    @Before
+    void before() {
+        helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
+        helper.setUp()
     }
 
-    public void setB(int b) {
-        this.b = b;
-    }
-
-    public int sum() {
-        return a + b;
+    @After
+    void after() {
+        helper.tearDown()
     }
 }
