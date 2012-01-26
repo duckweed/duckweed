@@ -38,8 +38,14 @@ class Login_wd_ITCase extends WebDriverRoot {
     public void shouldLoginAndLogout() {
         driver.getPageSource().contains('Welcome test@example.com')
         findAndClickButton(driver, 'logout')
-        assertNotNull driver.findElement(By.name('login'))
+        assertNotNull findElement(driver, 'login')
     }
+
+    @Test
+    public void shouldBeAnAboutBox() throws Exception{
+        assertNotNull 'should be an about box', findElement(driver, 'about')
+    }
+
 
     @Before
     public void before() {
