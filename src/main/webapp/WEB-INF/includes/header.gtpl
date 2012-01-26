@@ -8,8 +8,7 @@
 </head>
 <body>
 <div class='guff'>
-    duckweed
-    <a href="/">home</a>
+    <a class="home-button" href="/">duckweed</a>
 
     <% if (user != null){%>
     <a href="/showprofile.groovy" name="profile">profile</a>
