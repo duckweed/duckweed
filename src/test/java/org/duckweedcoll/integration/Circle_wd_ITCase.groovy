@@ -15,8 +15,6 @@ import static org.duckweedcoll.util.WebDriverAssistant.gotoCircle
 import static org.duckweedcoll.util.WebDriverAssistant.logout
 import static org.duckweedcoll.util.WebDriverAssistant.submit
 import static org.junit.Assert.assertNotNull
-import com.google.appengine.api.datastore.Entity
-import org.junit.Ignore
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -83,13 +81,6 @@ class Circle_wd_ITCase extends WebDriverRoot {
         assertTagWithTextExists(driver, 'circle-name', expectedCircleName)
         assertTagWithTextExists(driver, 'circle-description', expectedCircleDesc)
     }
-    
-    @Test
-    @Ignore
-    public void newCircleShouldHaveAMember() throws Exception{
-        new Entity('person')
-    }
-
 
 
     @Before

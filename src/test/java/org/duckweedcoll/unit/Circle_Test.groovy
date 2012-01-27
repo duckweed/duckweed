@@ -2,18 +2,17 @@ package org.duckweedcoll.unit
 
 import com.google.appengine.api.datastore.Entity
 import com.google.appengine.api.datastore.Query
-
 import groovyx.gaelyk.GaelykBindings
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpSession
-
 import org.junit.Test
 import static org.duckweedcoll.Circle.createCircle
 import static org.duckweedcoll.Circle.makeCall
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertNotNull
 import static org.junit.Assert.assertNull
+import org.junit.Ignore
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
@@ -35,7 +34,7 @@ import static org.junit.Assert.assertNull
  */
 
 @GaelykBindings
-class Circle_Test extends GaelykTestBase{
+class Circle_Test extends GaelykTestBase {
 
     Map params = [:]
 
@@ -75,7 +74,8 @@ class Circle_Test extends GaelykTestBase{
         assertNotNull newCircle
         assertEquals 'some name', newCircle.getProperty('name')
     }
-    
+
+
     @Test
     public void ifKeyFound_resetDataOnDatastore() throws Exception {
         Entity circle = createCircle(['name': 'some name'], datastore)
@@ -84,10 +84,11 @@ class Circle_Test extends GaelykTestBase{
         assertNotNull newCircle
         assertEquals 'new name', newCircle.getProperty('name')
     }
-    
+
+
     @Test
-    public void ifSubmitted_shouldRedirectToHome() throws Exception{
-        makeCall(['submit':'someVal', 'name': 'new name'], datastore, response)
+    public void ifSubmitted_shouldRedirectToHome() throws Exception {
+        makeCall(['submit': 'someVal', 'name': 'new name'], datastore, response)
         assertEquals('should have redirected', '/', redirect)
         def circle = getSingleCircle()
         assertNotNull circle
@@ -95,13 +96,13 @@ class Circle_Test extends GaelykTestBase{
         assertNotNull circle.getProperty('name')
         assertNotNull circle.getProperty('description')
     }
-    
+
 
     @Test
-    public void ifSubmittedWithKey_updateThatKey() throws Exception{
+    public void ifSubmittedWithKey_updateThatKey() throws Exception {
         def iniCircle = createCircle(['name': 'name', 'description': 'description'], datastore)
 
-        makeCall(['submit':'someVal', 'name': 'new name','description':'new description', 'key':iniCircle.key.id], datastore, response)
+        makeCall(['submit': 'someVal', 'name': 'new name', 'description': 'new description', 'key': iniCircle.key.id], datastore, response)
         assertEquals('should have redirected', '/', redirect)
         def circle = getSingleCircle()
         assertNotNull 'should find one circle', circle
@@ -112,7 +113,7 @@ class Circle_Test extends GaelykTestBase{
 
 
     @Test
-    public void ifNoKeyFound_NoCircleAdded() throws Exception{
+    public void ifNoKeyFound_NoCircleAdded() throws Exception {
         makeCall([:], datastore, response)
         assertNull 'should not add a circle to datastore', getSingleCircle()
     }
@@ -127,12 +128,27 @@ class Circle_Test extends GaelykTestBase{
         assertCallReturnsGoodCircle([:])
     }
 
+
+    @Test
+    @Ignore('trying out adding a member to a circle')
+    public void newCircleShouldHaveAMember() throws Exception {
+        def person1 = new Entity('person')
+        def person2 = new Entity('person')
+        def circle = new Entity('circle')
+        circle.setProperty('members', person1.key)
+
+        datastore.put person1
+        datastore.put person2
+        datastore.put circle
+    }
+
     private assertCallReturnsGoodCircle(LinkedHashMap prm) {
         def returnedEntity = makeCall(prm, datastore, response)
         assertNotNull returnedEntity
         assertNotNull returnedEntity.getProperty('name')
         assertNotNull returnedEntity.getProperty('description')
     }
+
 
     private Entity getSingleCircle() {
         Query q = new Query('circle')
