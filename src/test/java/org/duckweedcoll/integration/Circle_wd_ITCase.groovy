@@ -37,6 +37,8 @@ import static org.junit.Assert.assertNotNull
 class Circle_wd_ITCase extends WebDriverRoot {
 
     def username = createRandomUserName()
+    def circleName = "name of circle ${Math.random()}"
+    def circleDesc = "desc of circle ${Math.random()}"
 
 
     @Test
@@ -69,19 +71,21 @@ class Circle_wd_ITCase extends WebDriverRoot {
 
     @Test
     public void canCreateCircleAndFindItInShowCircles() {
-        gotoCircle(driver)
-        def expectedCircleName = "name of circle ${Math.random()}"
-        def expectedCircleDesc = "desc of circle ${Math.random()}"
-        enterText(driver, 'name', expectedCircleName)
-        enterText(driver, 'description', expectedCircleDesc)
-        submit(driver)
-
+        createCircleWithWeb()
         findAndClickButton(driver, 'showcircles')
-
-        assertTagWithTextExists(driver, 'circle-name', expectedCircleName)
-        assertTagWithTextExists(driver, 'circle-description', expectedCircleDesc)
+        assertTagWithTextExists(driver, 'circle-name', circleName)
+        assertTagWithTextExists(driver, 'circle-description', circleDesc)
     }
 
+    @Test
+    public void createdCircleShouldHaveSecretary() {
+        createCircleWithWeb()
+        findAndClickButton(driver, 'profile')
+        enterText(driver, 'username', 'something')
+        submit(driver)
+        findAndClickButton(driver, 'newcircle')
+        assertSourceContains(driver, 'the circle should have an secretary', "secretary is: something")
+    }
 
     @Before
     public void before() {
@@ -91,9 +95,14 @@ class Circle_wd_ITCase extends WebDriverRoot {
         acceptGoogleAuth(driver, username)
     }
 
-
     @After
     public void after() {
     }
 
+    private createCircleWithWeb() {
+        gotoCircle(driver)
+        enterText(driver, 'name', circleName)
+        enterText(driver, 'description', circleDesc)
+        submit(driver)
+    }
 }

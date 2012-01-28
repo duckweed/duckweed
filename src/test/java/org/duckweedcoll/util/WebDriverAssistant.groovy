@@ -24,10 +24,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import static org.duckweedcoll.Circle.NEW_CIRCLE_TAG
-import static org.junit.Assert.assertEquals
-import static org.junit.Assert.assertFalse
-import static org.junit.Assert.assertNotNull
-import static org.junit.Assert.fail
+import static org.junit.Assert.*
 
 public class WebDriverAssistant {
 
@@ -35,31 +32,25 @@ public class WebDriverAssistant {
         Assert.assertTrue(message, driver.getPageSource().contains(expectedString));
     }
 
-
     public static void assertSourceContains(WebDriver driver, String expectedString) {
         assertSourceContains(driver, '', expectedString)
     }
-
 
     public static String getCssSelectorText(WebDriver driver, String tag) {
         return driver.findElement(By.cssSelector(tag)).getText();
     }
 
-
     public static void assertCssSelectorContains(String message, WebDriver driver, String tag, String expected) {
         assertEquals(message, expected, getCssSelectorText(driver, tag));
     }
-
 
     public static WebElement findElement(WebDriver driver, String tag) {
         return driver.findElement(By.name(tag));
     }
 
-
     public static void findAndClickButton(WebDriver driver, name) {
         driver.findElement(By.name(name)).click()
     }
-
 
     static assertFieldContainsValue(WebDriver driver, String field, String value) {
         WebElement element = findElement(driver, field)
@@ -68,7 +59,6 @@ public class WebDriverAssistant {
         text = amIanInputField(text, element)
         assertEquals("should find '$value' in field '$field'", value, text)
     }
-
 
     private static String amIanInputField(String text, WebElement element) {
         if (text == '') {
@@ -82,7 +72,6 @@ public class WebDriverAssistant {
         return text
     }
 
-
     private static String amIaTextArea(WebElement element, String text) {
         try {
             text = element.text
@@ -92,7 +81,6 @@ public class WebDriverAssistant {
         return text
     }
 
-
     static logout(def driver) {
         try {
             findAndClickButton(driver, 'logout')
@@ -101,7 +89,6 @@ public class WebDriverAssistant {
             // swallow this
         }
     }
-
 
     static acceptGoogleAuth(def driver, def username) {
         try {
@@ -120,11 +107,9 @@ public class WebDriverAssistant {
         }
     }
 
-
     static submit(WebDriver driver) {
         findAndClickButton(driver, 'submit')
     }
-
 
     static enterText(WebDriver driver, String fieldUnderTest, String expectedText) {
         def ele = findElement(driver, fieldUnderTest)
@@ -133,26 +118,21 @@ public class WebDriverAssistant {
         ele.sendKeys(expectedText)
     }
 
-
     static String createRandomUserName() {
         return oneRandomUpperCaseLetter() + lowerCaseNameOfLength(4) + ' ' + oneRandomUpperCaseLetter() + lowerCaseNameOfLength(9)
     }
-
 
     static String oneRandomUpperCaseLetter() {
         return RandomStringUtils.random(1, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
     }
 
-
     static String lowerCaseNameOfLength(int length) {
         return RandomStringUtils.random(length, true, false).toLowerCase()
     }
 
-
     static gotoCircle(WebDriver driver) {
         findAndClickButton(driver, NEW_CIRCLE_TAG)
     }
-
 
     static assertTagWithTextExists(def driver, String tagName, def expectedValue) {
         List<WebElement> elements = driver.findElements(By.name(tagName))
@@ -163,5 +143,4 @@ public class WebDriverAssistant {
             tagEqualsText
         }
     }
-
 }
