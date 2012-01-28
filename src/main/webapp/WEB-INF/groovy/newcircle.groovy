@@ -1,8 +1,8 @@
-import org.duckweedcoll.Circle
+import org.duckweedcoll.CircleHandler
 import static org.junit.Assert.assertNotNull
-import org.duckweedcoll.CircleDef
+import org.duckweedcoll.Circle
 
-def circle = Circle.makeCall(params, datastore, response) as CircleDef
+def circle = CircleHandler.makeCall(params, datastore, response) as Circle
 
 circle.members = session.getAttribute('person').key
 

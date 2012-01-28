@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpSession
 import org.junit.Test
-import static org.duckweedcoll.Circle.createCircle
-import static org.duckweedcoll.Circle.makeCall
+import static org.duckweedcoll.CircleHandler.createCircle
+import static org.duckweedcoll.CircleHandler.makeCall
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertNotNull
 import static org.junit.Assert.assertNull

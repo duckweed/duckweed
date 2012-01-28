@@ -23,7 +23,7 @@ import org.junit.Assert
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import static org.duckweedcoll.Circle.NEW_CIRCLE_TAG
+import static org.duckweedcoll.CircleHandler.NEW_CIRCLE_TAG
 import static org.junit.Assert.*
 
 public class WebDriverAssistant {
