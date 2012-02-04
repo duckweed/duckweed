@@ -105,8 +105,7 @@ class GaelykUnitSpec extends spock.lang.Specification {
 		  'blobstore', 'files', 'oauth', 'channel', 'capabilities', 'namespace', 'localMode', 'app', 'backends', 'lifecycle'
 		].each { groovletInstance."$it" = this."$it" }
 
-        def groovletname = "${script.tokenize('.').first()}"
-        println "groovletname = $groovletname"
+        def groovletname = "${script.tokenize('.').first().tokenize('/').last()}"
         this.metaClass."$groovletname" = groovletInstance
 	}
 		
