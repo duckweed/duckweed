@@ -3,15 +3,15 @@ package org.duckweedcoll.spock
 import com.google.appengine.api.datastore.Query
 import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit
 
-class Spock_Demo extends GaelykUnitSpec {
+class SpockDemo_Test extends GaelykUnitSpec {
 
     def setup() {
-        groovlet 'list.groovy', 'src/main/webapp/WEB-INF/groovy'
+        groovlet 'SpockDemo.groovy'
     }
 
     def "the datastore is used from within the groovlet"() {
         given: "the initialised groovlet is invoked and data is persisted"
-        list.get()
+        SpockDemo.get()
 
         when: "the datastore is queried for data"
         def query = new Query("person")

@@ -98,8 +98,8 @@ class GaelykUnitSpec extends spock.lang.Specification {
 	}
 		
 	def groovlet = {
-        String script, String root = 'war/webapp/WEB-INF' ->
-		groovletInstance = new GroovletUnderSpec(script, root)
+        String script ->
+		groovletInstance = new GroovletUnderSpec(script)
 		
 		[ 'sout', 'out', 'response', 'datastore', 'memcache', 'mail', 'urlFetch', 'images', 'users', 'user', 'defaultQueue', 'queues', 'xmpp', 
 		  'blobstore', 'files', 'oauth', 'channel', 'capabilities', 'namespace', 'localMode', 'app', 'backends', 'lifecycle'
