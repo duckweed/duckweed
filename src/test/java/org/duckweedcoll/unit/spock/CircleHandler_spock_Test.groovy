@@ -1,14 +1,40 @@
-package org.duckweedcoll.integration.spock
+package org.duckweedcoll.unit.spock
 
 import com.google.appengine.api.datastore.Query
 import javax.servlet.http.HttpServletResponse
-import org.duckweedcoll.spock.GaelykUnitSpec
+import org.duckweedcoll.util.spock.GaelykUnitSpec
 import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit
 import static junit.framework.Assert.assertEquals
-import static junit.framework.Assert.assertNotNull
 
-// TODO:handle edit circle - all parameters with a key - redirect to homepage - edit circle in ds
+import com.google.appengine.api.datastore.Entity
+
 // TODO:handle show circle - no parameters with a key - return filled circle
+
+class EditCirclePage extends GaelykUnitSpec {
+    def setup() {
+        groovlet 'bl/CircleHandler.groovy'
+    }
+
+    def "given key without other params, redirect to newcircle page"() {
+        given:
+        def circle = new Entity('circle')
+        circle.name = 'name'
+        circle.description = 'desc'
+        circle.members = ''
+        circle.secretary = 'secretary'
+        datastore.put circle
+
+        circleHandler.get()
+        def redirectedTo
+        circleHandler.response = ['sendRedirect': { redirectedTo = it }] as HttpServletResponse
+
+        when:
+        circleHandler.get()
+
+        then:
+        assertEquals '/newcircle.groovy', redirectedTo
+    }
+}
 
 class NewCirclePage extends GaelykUnitSpec {
     def setup() {

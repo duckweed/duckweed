@@ -4,16 +4,16 @@ import org.duckweedcoll.WebDriverRoot
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import static org.duckweedcoll.util.WebDriverAssistant.acceptGoogleAuth
-import static org.duckweedcoll.util.WebDriverAssistant.assertSourceContains
-import static org.duckweedcoll.util.WebDriverAssistant.assertTagWithTextExists
-import static org.duckweedcoll.util.WebDriverAssistant.createRandomUserName
-import static org.duckweedcoll.util.WebDriverAssistant.enterText
-import static org.duckweedcoll.util.WebDriverAssistant.findAndClickButton
-import static org.duckweedcoll.util.WebDriverAssistant.findElement
-import static org.duckweedcoll.util.WebDriverAssistant.gotoCircle
-import static org.duckweedcoll.util.WebDriverAssistant.logout
-import static org.duckweedcoll.util.WebDriverAssistant.submit
+import static WebDriverAssistant.acceptGoogleAuth
+import static WebDriverAssistant.assertSourceContains
+import static WebDriverAssistant.assertTagWithTextExists
+import static WebDriverAssistant.createRandomUserName
+import static WebDriverAssistant.enterText
+import static WebDriverAssistant.findAndClickButton
+import static WebDriverAssistant.findElement
+import static WebDriverAssistant.gotoCircle
+import static WebDriverAssistant.logout
+import static WebDriverAssistant.submit
 import static org.junit.Assert.assertNotNull
 
 /*

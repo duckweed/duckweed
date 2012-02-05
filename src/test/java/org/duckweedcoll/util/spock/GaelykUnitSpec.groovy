@@ -1,4 +1,4 @@
-package org.duckweedcoll.spock
+package org.duckweedcoll.util.spock
 
 import com.google.appengine.api.LifecycleManager
 import com.google.appengine.api.NamespaceManager
@@ -20,7 +20,7 @@ import groovyx.gaelyk.GaelykCategory
 import groovyx.gaelyk.ImagesServiceWrapper
 import groovyx.gaelyk.QueueAccessor
 import javax.servlet.ServletOutputStream
-import javax.servlet.http.HttpServletResponse
+
 import com.google.appengine.tools.development.testing.*
 import org.springframework.mock.web.MockHttpServletResponse
 import org.springframework.mock.web.MockHttpServletRequest

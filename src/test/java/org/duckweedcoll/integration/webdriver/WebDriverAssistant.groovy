@@ -1,4 +1,4 @@
-package org.duckweedcoll.util;
+package org.duckweedcoll.integration.webdriver;
 /*
       Licensed to the Apache Software Foundation (ASF) under one
       or more contributor license agreements.  See the NOTICE file
@@ -23,10 +23,12 @@ import org.junit.Assert
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import static org.duckweedcoll.CircleHandler.NEW_CIRCLE_TAG
 import static org.junit.Assert.*
 
 public class WebDriverAssistant {
+
+    static String NEW_CIRCLE_TAG = 'newcircle'
+
 
     public static void assertSourceContains(WebDriver driver, String message, String expectedString) {
         Assert.assertTrue(message, driver.getPageSource().contains(expectedString));

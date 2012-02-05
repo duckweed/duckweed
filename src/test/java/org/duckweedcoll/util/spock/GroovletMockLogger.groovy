@@ -1,4 +1,4 @@
-package org.duckweedcoll.spock
+package org.duckweedcoll.util.spock
 
 class GroovletMockLogger{
 	static final logLevels = ['severe', 'warning', 'info', 'config', 'fine', 'finer', 'finest']

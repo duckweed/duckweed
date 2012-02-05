@@ -1,13 +1,12 @@
 package org.duckweedcoll.integration.webdriver
 
-import org.apache.commons.lang.RandomStringUtils
 import org.duckweedcoll.WebDriverRoot
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.openqa.selenium.By
+
 import org.openqa.selenium.WebDriver
-import static org.duckweedcoll.util.WebDriverAssistant.*
+import static WebDriverAssistant.*
 import static org.junit.Assert.assertNotNull
 
 /*
