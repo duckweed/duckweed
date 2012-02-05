@@ -1,31 +1,25 @@
 package org.duckweedcoll.unit.spock
 
+import com.google.appengine.api.datastore.Entity
+import com.google.appengine.api.datastore.Key
 import com.google.appengine.api.datastore.Query
 import javax.servlet.http.HttpServletResponse
 import org.duckweedcoll.util.spock.GaelykUnitSpec
 import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit
 import static junit.framework.Assert.assertEquals
 
-import com.google.appengine.api.datastore.Entity
-
 // TODO:handle show circle - no parameters with a key - return filled circle
 
 class EditCirclePage extends GaelykUnitSpec {
     def setup() {
-        groovlet 'bl/CircleHandler.groovy'
+        groovlet 'org/duckweedcoll/CircleHandler.groovy'
+        createCircleKey()
     }
 
     def "given key without other params, redirect to newcircle page"() {
-        given:
-        def circle = new Entity('circle')
-        circle.name = 'name'
-        circle.description = 'desc'
-        circle.members = ''
-        circle.secretary = 'secretary'
-        datastore.put circle
+        def redirectedTo = ''
 
-        circleHandler.get()
-        def redirectedTo
+        given:
         circleHandler.response = ['sendRedirect': { redirectedTo = it }] as HttpServletResponse
 
         when:
@@ -34,17 +28,29 @@ class EditCirclePage extends GaelykUnitSpec {
         then:
         assertEquals '/newcircle.groovy', redirectedTo
     }
+
+    Key createCircleKey() {
+        def circle = new Entity('circle')
+        circle.name = 'name'
+        circle.description = 'desc'
+        circle.members = ''
+        circle.secretary = 'secretary'
+        datastore.put circle
+
+        def key = circle.key
+        return key
+    }
 }
 
 class NewCirclePage extends GaelykUnitSpec {
     def setup() {
-        groovlet 'bl/CircleHandler.groovy'
+        groovlet 'org/duckweedcoll/CircleHandler.groovy'
         circleHandler.get()
     }
 
     def "redirect parameterless request to newcircle.groovy"() {
         given:
-        def redirectedTo
+        def redirectedTo = ''
         circleHandler.response = ['sendRedirect': { redirectedTo = it }] as HttpServletResponse
 
         when:
@@ -67,13 +73,13 @@ class NewCirclePage extends GaelykUnitSpec {
 
 class CreateNewCircle extends GaelykUnitSpec {
     def setup() {
-        groovlet 'bl/CircleHandler.groovy'
+        groovlet 'org/duckweedcoll/CircleHandler.groovy'
         circleHandler.params.name = ''
     }
 
     def "redirect home"() {
         given:
-        def redirectedTo
+        def redirectedTo = ''
         circleHandler.response = ['sendRedirect': { redirectedTo = it }] as HttpServletResponse
 
         when:
@@ -119,6 +125,7 @@ class CreateNewCircle extends GaelykUnitSpec {
         List entities = preparedQuery.asList(withLimit(1))
         return entities
     }
+
 }
 
 

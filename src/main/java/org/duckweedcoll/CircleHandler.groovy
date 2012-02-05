@@ -1,4 +1,4 @@
-package bl;
+package org.duckweedcoll;
 
 import com.google.appengine.api.datastore.Entity
 import org.duckweedcoll.Circle
