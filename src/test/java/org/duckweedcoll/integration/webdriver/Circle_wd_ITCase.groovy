@@ -84,7 +84,7 @@ class Circle_wd_ITCase extends WebDriverRoot {
         enterText(driver, 'username', 'something')
         submit(driver)
         findAndClickButton(driver, 'newcircle')
-        assertSourceContains(driver, 'the circle should have an secretary', "secretary is: unknown")
+        assertSourceContains(driver, 'the circle should have an secretary', "secretary is: something")
     }
 
     @Before

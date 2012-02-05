@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse
 import org.duckweedcoll.spock.GaelykUnitSpec
 import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit
 import static junit.framework.Assert.assertEquals
+import static junit.framework.Assert.assertNotNull
 
 // TODO:handle edit circle - all parameters with a key - redirect to homepage - edit circle in ds
 // TODO:handle show circle - no parameters with a key - return filled circle
@@ -69,16 +70,21 @@ class CreateNewCircle extends GaelykUnitSpec {
     }
 
     def "circle in ds should have description passed in param list"() {
-        final expectedDesc = 'some name here'
+        final expectedName = 'some name here'
+        final expectedDesc = 'some desc here'
+
         given:
         circleHandler.params.description = expectedDesc
+        circleHandler.params.name = expectedName
         circleHandler.get()
 
         when:
         List entities = getAllCircles()
 
         then:
-        assertEquals 'should have created a circle with the right name', expectedDesc, entities[0].description
+        assertEquals 'should have created a circle with the right name', expectedName, entities[0].name
+        assertEquals 'should have created a circle with the right desc', expectedDesc, entities[0].description
+        entities[0].members != null
     }
 
     private List getAllCircles() {
@@ -88,5 +94,7 @@ class CreateNewCircle extends GaelykUnitSpec {
         return entities
     }
 }
+
+
 
 

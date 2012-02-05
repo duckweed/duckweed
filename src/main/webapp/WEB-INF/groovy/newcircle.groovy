@@ -1,14 +1,15 @@
-import org.duckweedcoll.CircleHandler
 import static org.junit.Assert.assertNotNull
-import org.duckweedcoll.Circle
 
-def circle = CircleHandler.makeCall(params, datastore, response) as Circle
+include 'bl/CircleHandler.groovy'
 
-circle.members = session.getAttribute('person').key
+def circle = request.getAttribute('circle')
 
 assertNotNull 'circle not found', circle
 assertNotNull 'circle.name not found', circle.name
 assertNotNull 'circle.desc not found', circle.description
+
+circle.members = session.getAttribute('person').key
+assertNotNull 'circle.members not found', circle.members
 
 include '/WEB-INF/includes/header.gtpl'
 
