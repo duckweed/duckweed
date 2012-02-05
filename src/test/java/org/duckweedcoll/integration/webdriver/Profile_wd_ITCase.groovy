@@ -1,4 +1,4 @@
-package org.duckweedcoll.integration
+package org.duckweedcoll.integration.webdriver
 
 import org.apache.commons.lang.RandomStringUtils
 import org.duckweedcoll.WebDriverRoot

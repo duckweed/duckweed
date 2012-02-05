@@ -1,4 +1,4 @@
-package org.duckweedcoll.integration
+package org.duckweedcoll.integration.webdriver
 
 import org.duckweedcoll.WebDriverRoot
 import org.junit.After

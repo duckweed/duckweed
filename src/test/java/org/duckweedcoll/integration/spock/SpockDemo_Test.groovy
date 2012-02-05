@@ -1,4 +1,4 @@
-package org.duckweedcoll.integration
+package org.duckweedcoll.integration.spock
 
 import com.google.appengine.api.datastore.Query
 import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit
@@ -12,9 +12,9 @@ class SpockDemo_Test extends GaelykUnitSpec {
 
     def "should add good user to ds"() {
         given:
-        SpockDemo.params.firstname = 'andrew'
-        SpockDemo.params.lastname = 'oxenburgh'
-        SpockDemo.get()
+        spockDemo.params.firstname = 'andrew'
+        spockDemo.params.lastname = 'oxenburgh'
+        spockDemo.get()
 
         when:
         List entities = getAllAndrews()
@@ -25,8 +25,8 @@ class SpockDemo_Test extends GaelykUnitSpec {
 
     def "should have a first name: if not, don't add him to ds"() {
         given:
-        SpockDemo.params.lastname = 'oxenburgh'
-        SpockDemo.get()
+        spockDemo.params.lastname = 'oxenburgh'
+        spockDemo.get()
 
         when:
         List entities = getAllAndrews()
@@ -37,8 +37,8 @@ class SpockDemo_Test extends GaelykUnitSpec {
 
     def "should have a last name: if not, don't add him to ds"() {
         given:
-        SpockDemo.params.firstname = 'andrew'
-        SpockDemo.get()
+        spockDemo.params.firstname = 'andrew'
+        spockDemo.get()
 
         when:
         List entities = getAllAndrews()

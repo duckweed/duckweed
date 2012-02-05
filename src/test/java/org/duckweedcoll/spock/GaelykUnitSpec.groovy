@@ -106,6 +106,12 @@ class GaelykUnitSpec extends spock.lang.Specification {
 		].each { groovletInstance."$it" = this."$it" }
 
         def groovletname = "${script.tokenize('.').first().tokenize('/').last()}"
+
+        final firstChar = groovletname.charAt(0)
+        if(firstChar.isUpperCase()){
+            groovletname = firstChar.toLowerCase().toString() + groovletname.substring(1)
+        }
+
         this.metaClass."$groovletname" = groovletInstance
 	}
 		
