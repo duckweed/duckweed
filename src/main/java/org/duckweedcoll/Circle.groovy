@@ -4,13 +4,13 @@ import groovyx.gaelyk.GaelykBindings
 
 @GaelykBindings
 class Circle {
-    def name
-    def description
-    def members
+    def name = ""
+    def description = ""
+    def members = ""
 
     def getSecretary() {
         if (members == null) {
-            'unknown'
+        'unknown'
         } else {
             datastore.get(members).getProperty('username')
         }

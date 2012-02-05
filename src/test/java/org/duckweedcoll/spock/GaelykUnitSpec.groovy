@@ -22,12 +22,14 @@ import groovyx.gaelyk.QueueAccessor
 import javax.servlet.ServletOutputStream
 import javax.servlet.http.HttpServletResponse
 import com.google.appengine.tools.development.testing.*
+import org.springframework.mock.web.MockHttpServletResponse
+import org.springframework.mock.web.MockHttpServletRequest
 
 class GaelykUnitSpec extends spock.lang.Specification {
 	
 	def groovletInstance
 	def helper
-	def sout, out, response
+	def sout, out, response, request
 	def datastore, memcache, mail, urlFetch, images, users, user
 	def defaultQueue, queues, xmpp, blobstore, files, oauth, channel
 	def namespace, localMode, app, capabilities, backends, lifecycle
@@ -56,7 +58,8 @@ class GaelykUnitSpec extends spock.lang.Specification {
 		
 		sout = Mock(ServletOutputStream)
 		out = Mock(PrintWriter)
-		response = Mock(HttpServletResponse)
+		response = new MockHttpServletResponse()
+        request = new MockHttpServletRequest()
 		oauth = Mock(OAuthService)
 		channel = Mock(ChannelService)
 		urlFetch = Mock(URLFetchService)
@@ -101,7 +104,7 @@ class GaelykUnitSpec extends spock.lang.Specification {
         String script ->
 		groovletInstance = new GroovletUnderSpec(script)
 		
-		[ 'sout', 'out', 'response', 'datastore', 'memcache', 'mail', 'urlFetch', 'images', 'users', 'user', 'defaultQueue', 'queues', 'xmpp', 
+		[ 'sout', 'out', 'response', 'request', 'datastore', 'memcache', 'mail', 'urlFetch', 'images', 'users', 'user', 'defaultQueue', 'queues', 'xmpp',
 		  'blobstore', 'files', 'oauth', 'channel', 'capabilities', 'namespace', 'localMode', 'app', 'backends', 'lifecycle'
 		].each { groovletInstance."$it" = this."$it" }
 
