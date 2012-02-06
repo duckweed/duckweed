@@ -12,7 +12,7 @@ import static junit.framework.Assert.assertEquals
 
 class EditCirclePage extends GaelykUnitSpec {
     def setup() {
-        groovlet 'org/duckweedcoll/CircleHandler.groovy'
+        groovlet 'CircleHandler.groovy'
         createCircleKey()
     }
 
@@ -44,7 +44,7 @@ class EditCirclePage extends GaelykUnitSpec {
 
 class NewCirclePage extends GaelykUnitSpec {
     def setup() {
-        groovlet 'org/duckweedcoll/CircleHandler.groovy'
+        groovlet 'CircleHandler.groovy'
         circleHandler.get()
     }
 
@@ -73,7 +73,7 @@ class NewCirclePage extends GaelykUnitSpec {
 
 class CreateNewCircle extends GaelykUnitSpec {
     def setup() {
-        groovlet 'org/duckweedcoll/CircleHandler.groovy'
+        groovlet 'CircleHandler.groovy'
         circleHandler.params.name = ''
     }
 

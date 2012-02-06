@@ -2,7 +2,7 @@ package org.duckweedcoll.util.spock
 
 class GroovletUnderSpec {
 
-    private static final String testRoot = 'src/main/java'
+    private static final String testRoot = 'src/main/webapp/WEB-INF/groovy/bl'
     def gse = new GroovyScriptEngine(testRoot)
     def binding = new Binding()
     def log = new GroovletMockLogger(level: 'info')
