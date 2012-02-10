@@ -4,16 +4,10 @@ import org.duckweedcoll.WebDriverRoot
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import static WebDriverAssistant.acceptGoogleAuth
-import static WebDriverAssistant.assertSourceContains
-import static WebDriverAssistant.assertTagWithTextExists
-import static WebDriverAssistant.createRandomUserName
-import static WebDriverAssistant.enterText
-import static WebDriverAssistant.findAndClickButton
-import static WebDriverAssistant.findElement
-import static WebDriverAssistant.gotoCircle
-import static WebDriverAssistant.logout
-import static WebDriverAssistant.submit
+import org.openqa.selenium.By
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebElement
+import static WebDriverAssistant.*
 import static org.junit.Assert.assertNotNull
 
 /*
@@ -71,10 +65,14 @@ class Circle_wd_ITCase extends WebDriverRoot {
 
     @Test
     public void canCreateCircleAndFindItInShowCircles() {
-        createCircleWithWeb()
-        findAndClickButton(driver, 'showcircles')
-        assertTagWithTextExists(driver, 'circle-name', circleName)
-        assertTagWithTextExists(driver, 'circle-description', circleDesc)
+        checkCreateCircleAndFindItInShowCircles()
+    }
+
+    @Test
+    public void canOpenCreatedCircle() {
+        checkCreateCircleAndFindItInShowCircles()
+        findTagWithNameAndTextValue(driver, 'circle-name', circleName).click()
+        assertNotNull 'cant find title', findInputWithNameAndTextValue(driver, 'name', circleName)
     }
 
     @Test
@@ -86,6 +84,7 @@ class Circle_wd_ITCase extends WebDriverRoot {
         findAndClickButton(driver, 'newcircle')
         assertSourceContains(driver, 'the circle should have an secretary', "secretary is: something")
     }
+
 
     @Before
     public void before() {
@@ -99,10 +98,32 @@ class Circle_wd_ITCase extends WebDriverRoot {
     public void after() {
     }
 
+    private checkCreateCircleAndFindItInShowCircles() {
+        createCircleWithWeb()
+        findAndClickButton(driver, 'showcircles')
+        assertTagWithTextExists(driver, 'circle-name', circleName)
+        assertTagWithTextExists(driver, 'circle-description', circleDesc)
+    }
+
     private createCircleWithWeb() {
         gotoCircle(driver)
         enterText(driver, 'name', circleName)
         enterText(driver, 'description', circleDesc)
         submit(driver)
+    }
+
+    private WebElement findInputWithNameAndTextValue(WebDriver driver, String tagName, String expectedText) {
+        String xpath = "//input[@name='${tagName}'][contains(@value, '${expectedText}')]"
+        WebElement ret = findXPathElement(xpath)
+        return ret
+    }
+
+    private WebElement findTagWithNameAndTextValue(WebDriver driver, String tagName, String expectedText) {
+        WebElement ret = findXPathElement("//td[@name='$tagName']//*[contains(text(), '${expectedText}')]")
+        return ret
+    }
+
+    private WebElement findXPathElement(String xpath) {
+        return driver.findElement(By.xpath(xpath))
     }
 }

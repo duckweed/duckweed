@@ -2,19 +2,37 @@ package org.duckweedcoll.unit.spock
 
 import com.google.appengine.api.datastore.Entity
 import com.google.appengine.api.datastore.Key
-import com.google.appengine.api.datastore.Query
 import javax.servlet.http.HttpServletResponse
 import org.duckweedcoll.util.spock.GaelykUnitSpec
-import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit
 import static junit.framework.Assert.assertEquals
+import static junit.framework.Assert.assertNotNull
+import static org.duckweedcoll.unit.spock.TestAssistant.getAllCircles
 
 // TODO:handle show circle - no parameters with a key - return filled circle
 
 class EditCirclePage extends GaelykUnitSpec {
+    private static final String NAME = 'name of the circle'
+    private static final String DESC = 'description of the circle'
+
     def setup() {
         groovlet 'CircleHandler.groovy'
-        createCircleKey()
+        Key key = createCircleKey()
+        circleHandler.params.put('key', key as String)
     }
+
+    def "given key without other params, newcircle page should have circle attributes"() {
+        when:
+        circleHandler.get()
+
+        then:
+        assertNotNull 'should find a circle', circleHandler.circle
+        assertNotNull 'should find a name', circleHandler.circle.name
+        assertNotNull 'should find a name', circleHandler.circle.description
+        assertEquals 'wrong name', circleHandler.circle.name, NAME
+        assertEquals 'wrong desc', circleHandler.circle.description, DESC
+
+    }
+
 
     def "given key without other params, redirect to newcircle page"() {
         def redirectedTo = ''
@@ -31,8 +49,8 @@ class EditCirclePage extends GaelykUnitSpec {
 
     Key createCircleKey() {
         def circle = new Entity('circle')
-        circle.name = 'name'
-        circle.description = 'desc'
+        circle.name = NAME
+        circle.description = DESC
         circle.members = ''
         circle.secretary = 'secretary'
         datastore.put circle
@@ -84,7 +102,6 @@ class CreateNewCircle extends GaelykUnitSpec {
 
         when:
         circleHandler.get()
-        List entities = getAllCircles()
 
         then:
         assertEquals '/', redirectedTo
@@ -95,7 +112,7 @@ class CreateNewCircle extends GaelykUnitSpec {
         circleHandler.get()
 
         when:
-        List entities = getAllCircles()
+        List entities = getAllCircles(datastore)
 
         then:
         assertEquals 'should have created a circle', 1, entities.size()
@@ -111,23 +128,12 @@ class CreateNewCircle extends GaelykUnitSpec {
         circleHandler.get()
 
         when:
-        List entities = getAllCircles()
+        List entities = getAllCircles(datastore)
 
         then:
         assertEquals 'should have created a circle with the right name', expectedName, entities[0].name
         assertEquals 'should have created a circle with the right desc', expectedDesc, entities[0].description
         entities[0].members != null
     }
-
-    private List getAllCircles() {
-        def query = new Query("circle")
-        def preparedQuery = datastore.prepare(query)
-        List entities = preparedQuery.asList(withLimit(1))
-        return entities
-    }
-
 }
-
-
-
 

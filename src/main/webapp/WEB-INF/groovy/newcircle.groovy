@@ -9,7 +9,6 @@ assertNotNull 'circle.name not found', circle.name
 assertNotNull 'circle.desc not found', circle.description
 
 circle.members = session.getAttribute('person').key
-assertNotNull 'circle.members not found', circle.members
 
 include '/WEB-INF/includes/header.gtpl'
 

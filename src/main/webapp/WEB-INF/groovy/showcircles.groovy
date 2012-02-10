@@ -18,7 +18,7 @@ html.html {
             Entity circle ->
             tr {
                 td('name': 'circle-name') {
-                    a(href: "newcircle.groovy?key=$circle.key.id") {
+                    a(href: "newcircle.groovy?key=${circle.key as String}") {
                         p(circle.name)
                     }
                 }
