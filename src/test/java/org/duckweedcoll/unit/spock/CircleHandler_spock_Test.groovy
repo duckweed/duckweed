@@ -1,22 +1,19 @@
 package org.duckweedcoll.unit.spock
 
-import com.google.appengine.api.datastore.Entity
 import com.google.appengine.api.datastore.Key
 import javax.servlet.http.HttpServletResponse
 import org.duckweedcoll.util.spock.GaelykUnitSpec
 import static junit.framework.Assert.assertEquals
 import static junit.framework.Assert.assertNotNull
-import static org.duckweedcoll.unit.spock.TestAssistant.getAllCircles
+import static org.duckweedcoll.unit.spock.TestAssistant.*
 
 // TODO:handle show circle - no parameters with a key - return filled circle
 
-class EditCirclePage extends GaelykUnitSpec {
-    private static final String NAME = 'name of the circle'
-    private static final String DESC = 'description of the circle'
+class ShowEditCirclePage extends GaelykUnitSpec {
 
     def setup() {
         groovlet 'CircleHandler.groovy'
-        Key key = createCircleKey()
+        Key key = createCircleKey(datastore)
         circleHandler.params.put('key', key as String)
     }
 
@@ -33,7 +30,6 @@ class EditCirclePage extends GaelykUnitSpec {
 
     }
 
-
     def "given key without other params, redirect to newcircle page"() {
         def redirectedTo = ''
 
@@ -47,29 +43,18 @@ class EditCirclePage extends GaelykUnitSpec {
         assertEquals '/newcircle.groovy', redirectedTo
     }
 
-    Key createCircleKey() {
-        def circle = new Entity('circle')
-        circle.name = NAME
-        circle.description = DESC
-        circle.members = ''
-        circle.secretary = 'secretary'
-        datastore.put circle
-
-        def key = circle.key
-        return key
-    }
 }
 
 class NewCirclePage extends GaelykUnitSpec {
+    def redirectedTo = ''
+
     def setup() {
         groovlet 'CircleHandler.groovy'
-        circleHandler.get()
+        circleHandler.response = ['sendRedirect': { redirectedTo = it }] as HttpServletResponse
     }
 
     def "redirect parameterless request to newcircle.groovy"() {
         given:
-        def redirectedTo = ''
-        circleHandler.response = ['sendRedirect': { redirectedTo = it }] as HttpServletResponse
 
         when:
         circleHandler.get()
@@ -80,12 +65,29 @@ class NewCirclePage extends GaelykUnitSpec {
 
     def "return empty circle into request attributes"() {
         when:
+        circleHandler.get()
         def returnedCircle = circleHandler.request.getAttribute('circle')
 
         then:
         assertEquals 'should have empty name', "".toString(), returnedCircle.name.toString()
         assertEquals 'should have empty description', "".toString(), returnedCircle.description.toString()
+    }
 
+    def "cannot create circle with name of already existing one"() {
+        when:
+        assertEquals 0, getAllCircles(datastore).size()
+        createCircleKey(datastore)
+        assertEquals 'precond: there should be one circle', 1, getAllCircles(datastore).size()
+        circleHandler.params.name = NAME
+        circleHandler.get()
+
+        def errors = circleHandler.request.getAttribute('errors')
+        then:
+        assertNotNull 'should find a duplicate name error', errors
+        assertEquals 'should be one error', 1, errors.size()
+        assertEquals 'error should be correct wording', 'name duplicated', errors[0]
+        assertEquals 'the new circle should not have been saved', 1, getAllCircles(datastore).size()
+        assertEquals 'duplicate error shoud direct back to new circle page', '/newcircle.groovy', redirectedTo
     }
 }
 
